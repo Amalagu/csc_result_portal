@@ -1,0 +1,43 @@
+# Ignore virtual environment directories
+venv/
+.env/
+.pycache/
+
+# Ignore database files (SQLite, PostgreSQL, etc.)
+*.sqlite3
+db.sqlite3
+*.db
+
+# Ignore log files
+*.log
+
+# Ignore user-uploaded media files (if applicable)
+/media/
+
+# Ignore static files collected for production
+/static/
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+
+# Ignore .DS_Store files on macOS
+.DS_Store
+
+# Ignore generated or temporary files
+*.bak
+*.swp
+
+# Ignore IDE or code editor files
+.vscode/
+.idea/
+
+# Ignore environment-specific settings (for example, .env files)
+*.env
+*.env.*
+
+# Ignore settings files (local settings, sensitive data, etc.)
+settings_local.py
+*.secrets.json
+*.confidential
+*.settings
