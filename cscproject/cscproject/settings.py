@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     'portal',
     'accounts',
+    'result',
+    'course',
 ]
 
 MIDDLEWARE = [

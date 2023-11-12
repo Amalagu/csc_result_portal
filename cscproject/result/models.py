@@ -19,14 +19,20 @@ remark_list = (
     ('FAIL', 'FAIL')
 )
 
-
+level_list = (
+        ('100 LEVEL', '100 LEVEL'),
+        ('200 LEVEL', '200 LEVEL' ),
+        ('300 LEVEL', '300 LEVEL'),
+        ('400 LEVEL', '400 LEVEL'),
+        ('500 LEVEL', '500 LEVEL')
+    )
 
 class RegisteredCourse(models.Model):
-    student_id = models.ForeignKey(Student)
-    course_id = models.ForeignKey(Course)
-    student_class = models.ForeignKey(StudentClass)
-    session = models.ForeignKey(Session)
-    semester = models.ForeignKey(Semester)
+    student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
+    course_id = models.ForeignKey(Course, on_delete=models.CASCADE)
+    student_class = models.ForeignKey(StudentClass, on_delete=models.SET_NULL, null=True)
+    session = models.ForeignKey(Session, on_delete=models.CASCADE)
+    semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     testscore = models.IntegerField()
     labscore = models.IntegerField()
     examscore = models.IntegerField()
@@ -38,10 +44,11 @@ class RegisteredCourse(models.Model):
 
 
 class Result(models.Model):
-    student = models.ForeignKey(Student)
-    session = models.ForeignKey(Session)
-    semester = models.ForeignKey(Semester)
-    course = models.ForeignKey(RegisteredCourse)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    session = models.ForeignKey(Session, on_delete=models.CASCADE)
+    semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
+    course = models.ForeignKey(RegisteredCourse, on_delete=models.CASCADE)
     gpa = models.FloatField(null=True)
     cgpa = models.FloatField(null=True)
+    level = models.CharField(max_length=25, choices=level_list, null=True)
 

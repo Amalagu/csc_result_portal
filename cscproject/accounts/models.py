@@ -1,7 +1,8 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 from django.db import models
-from portal.models import StudentClass
+from portal.models import StudentClass #, DepartmentalDues
+
 # Create your models here.
 
 

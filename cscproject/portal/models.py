@@ -24,19 +24,29 @@ class StudentClass(models.Model):
     current_level = models.CharField(choices=level_list, max_length=10)
     enrollment_year = models.CharField(max_length=4)
 
+    def __str__(self):
+        return f'Class of {self.class_set}'
+
 
 class Session(models.Model):
-    name = models.CharField(max_length=7, primary_key=True, unique=True)
+    name = models.CharField(max_length=9, primary_key=True, unique=True)
     iscurrentsession = models.BooleanField(default=False)
     start_date = models.DateField(unique=True)
     end_date = models.DateField()
+
+    def __str__(self):
+        return self.name
 
 class Semester(models.Model):
     name = models.CharField(max_length=20, choices=semester_list, unique=True, primary_key=True)
     iscurrentsemester = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.name
+
 
 class DepartmentalDues(models.Model):
     #student = models.ForeignKey(Student)
+    student = models.ForeignKey('accounts.Student', on_delete=models.CASCADE)
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     paid = models.BooleanField(default=False)
