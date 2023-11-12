@@ -52,7 +52,7 @@ class User(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
-    objects = CustomUserManager
+    objects = CustomUserManager()
 
     @property
     def get_full_name(self):
