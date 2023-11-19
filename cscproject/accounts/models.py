@@ -49,6 +49,7 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=30, blank=False, null=False)
     last_name = models.CharField(max_length=30, blank=False, null=False)
     other_names = models.CharField(max_length=50, blank=True, null=True)
+    picture = models.ImageField(upload_to='profile_pictures/%y/%m/%d/', default='default.png', null=True, blank=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
@@ -62,6 +63,29 @@ class User(AbstractUser):
             full_name = self.first_name + " " + self.last_name
         return full_name
 
+    def get_picture(self):
+        try:
+            return self.picture.url
+        except:
+            no_picture = settings.MEDIA_URL + 'default.png'
+            return no_picture
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        try:
+            img = Image.open(self.picture.path)
+            if img.height > 300 or img.width > 300:
+                output_size = (300, 300)
+                img.thumbnail(output_size)
+                img.save(self.picture.path)
+        except:
+            pass
+    
+    def delete(self, *args, **kwargs):
+        if self.picture.url != settings.MEDIA_URL + 'default.png':
+            self.picture.delete()
+        super().delete(*args, **kwargs)
+
     def __str__(self):
         return '{} ({})'.format(self.get_full_name, self.email)
 
@@ -69,9 +93,20 @@ class User(AbstractUser):
 
 
 class Student(models.Model):
+    level_list = (
+        ('100 LEVEL', '100 LEVEL'),
+        ('200 LEVEL', '200 LEVEL' ),
+        ('300 LEVEL', '300 LEVEL'),
+        ('400 LEVEL', '400 LEVEL'),
+        ('500 LEVEL', '500 LEVEL')
+    )
     student = models.OneToOneField(User, on_delete=models.CASCADE)
-    student_class = models.ForeignKey(StudentClass, null=True, on_delete=models.SET_NULL)
+    student_class = models.ForeignKey(StudentClass, null=True, blank=True, on_delete=models.SET_NULL)
     registeration_number = models.CharField(max_length=11, null=False, blank=False, primary_key=True, unique=True)
+    level = models.CharField(max_length=25, choices=level_list, null=True)
+
+    def __str__(self):
+        return self.student.get_full_name
     
 
 

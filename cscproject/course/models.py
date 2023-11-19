@@ -28,3 +28,6 @@ class Course(models.Model):
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     iselective = models.BooleanField()
     level = models.CharField(max_length=25, choices=level_list, null=True)
+
+    def __str__(self):
+        return self.code
