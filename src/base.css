@@ -119,6 +119,8 @@
 
     --text-big: 2rem;
     --text-small: .8rem;
+
+    --border: 1px solid var(--black-100)
 }
 /* Color Classes */
 .primary {background-color: var(--primary);}
@@ -470,9 +472,9 @@ button:disabled:hover {
 .btn-small-black,
 .btn-small-white,
 .btn-small-body {
-    padding: .5rem;
+    padding: .8rem .5rem;
     border-radius: var(--radius-normal);
-    font-size: 1rem;
+    font-size: .75rem;
     font-weight: 600;
     display: inline;
     cursor: pointer;
@@ -600,8 +602,10 @@ button:disabled:hover {
 .grid {
 display: grid;}
 .grid-repeat-2 {
+display: grid;
 grid-template-columns: repeat(2, 1fr);}
 .grid-repeat-3 {
+display: grid;
 grid-template-columns: repeat(3, 1fr);}
 .gap-small {gap: .2rem}
 .gap-1 {gap: .5rem;}
@@ -733,5 +737,10 @@ grid-template-columns: repeat(3, 1fr);}
     background: url(/src/assets/checkboxes/checkbox-small-disabled.svg);
     background-repeat: no-repeat;
     cursor: not-allowed;
+}
+
+/* Design classes */
+.border {
+    border: var(--border)
 }
 

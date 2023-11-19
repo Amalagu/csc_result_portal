@@ -2,6 +2,7 @@ const menu = document.querySelector('#menu');
 const smallNav = document.querySelector('.small-screen-nav-content');
 const smallSearch = document.querySelector('#small-search');
 
+
 document.addEventListener('DOMContentLoaded', function() {
   hideOverlay();
 });
