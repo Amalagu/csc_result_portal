@@ -375,14 +375,17 @@ button:disabled:hover {
 .btn-success,
 .btn-warning,
 .btn-black,
-.btn-white {
+.btn-white ,
+.btn-body {
     padding: 1rem;
     border-radius: var(--radius-normal);
     font-size: 1rem;
     font-weight: 600;
-    display: block;
+    display: inline;
     cursor: pointer;
-    width: 8rem;
+    min-width: 6rem;
+    width: auto;
+    margin: .5rem 0;
 }
 .btn-primary {
     background-color: var(--primary);
@@ -448,6 +451,117 @@ button:disabled:hover {
 }
 .btn-black:hover {
     background-color: var(--black-400);
+}
+.btn-body {
+    background-color: var(--body);
+    color: var(--white);
+}
+.btn-body:hover {
+    background-color: var(--body-400);
+}
+
+.btn-small,
+.btn-small-primary,
+.btn-small-secondary,
+.btn-small-accent,
+.btn-small-danger,
+.btn-small-success,
+.btn-small-warning,
+.btn-small-black,
+.btn-small-white,
+.btn-small-body {
+    padding: .5rem;
+    border-radius: var(--radius-normal);
+    font-size: 1rem;
+    font-weight: 600;
+    display: inline;
+    cursor: pointer;
+    min-width: 6rem;
+    width: auto;
+    margin: .5rem 0;
+}
+
+.btn-small-primary {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.btn-small-primary:hover {
+    background-color: var(--primary-600);
+}
+
+.btn-small-secondary {
+    background-color: var(--secondary);
+    color: var(--white);
+}
+
+.btn-small-secondary:hover {
+    background-color: var(--secondary-600);
+}
+
+.btn-small-danger {
+    background-color: var(--danger);
+    color: var(--white);
+}
+
+.btn-small-danger:hover {
+    background-color: var(--danger-600);
+}
+
+.btn-small-accent {
+    background-color: var(--accent);
+    color: var(--white);
+}
+
+.btn-small-accent:hover {
+    background-color: var(--accent-600);
+}
+
+.btn-small-warning {
+    background-color: var(--warning);
+    color: var(--white);
+}
+
+.btn-small-warning:hover {
+    background-color: var(--warning-600);
+}
+
+.btn-small-success {
+    background-color: var(--success);
+    color: var(--white);
+}
+
+.btn-small-success:hover {
+    background-color: var(--success-600);
+}
+
+.btn-small-white {
+    background-color: var(--white);
+    border: 1px solid var(--black);
+    color: var(--black);
+}
+
+.btn-small-white:hover {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.btn-small-black {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+.btn-small-black:hover {
+    background-color: var(--black-400);
+}
+
+.btn-small-body {
+    background-color: var(--body);
+    color: var(--white);
+}
+
+.btn-small-body:hover {
+    background-color: var(--body-400);
 }
 
 /* Dimension Classes */
@@ -561,3 +675,63 @@ grid-template-columns: repeat(3, 1fr);}
     font-size: 1.25rem;
     color: var(--body-400);
 }
+
+/* Selection and File input element styling */
+.select, .file-input {
+    display: inline-block;
+    margin: .5rem 0;
+}
+.select > select, .file-input > input{
+    display: block;
+    border: 1px solid var(--primary);
+    padding: .5rem .7rem;
+    font-weight: 600;
+    font-weight: 1rem;
+    line-height: 1.2rem;
+    color: var(--body);
+    background-color: var(--white);
+}
+.select > label, .file-input > label {
+    display: block;
+    color: var(--secondary-800);
+    font-weight: 600;
+    font-size: .85rem;
+    margin: .2rem 0;
+}
+
+/* Checkbox stylings */
+.checkbox {
+    cursor: pointer;
+    appearance: none;
+    width: 20px;
+    aspect-ratio: 1/1;
+    background: url(/src/assets/checkboxes/checkbox-unchecked.svg);
+    background-repeat: no-repeat;
+}
+.checkbox:checked {
+    background: url(/src/assets/checkboxes/checkbox-checked.svg);
+    background-repeat: no-repeat;
+}
+.checkbox:disabled {
+    background: url(/src/assets/checkboxes/checkbox-disabled.svg);
+    background-repeat: no-repeat;
+    cursor: not-allowed;
+}
+.checkbox-small {
+    cursor: pointer;
+    appearance: none;
+    width: 15px;
+    aspect-ratio: 1/1;
+    background: url(/src/assets/checkboxes/checkbox-small-unchecked.svg);
+    background-repeat: no-repeat;
+}
+.checkbox-small:checked {
+    background: url(/src/assets/checkboxes/checkbox-small-checked.svg);
+    background-repeat: no-repeat;
+}
+.checkbox-small:disabled {
+    background: url(/src/assets/checkboxes/checkbox-small-disabled.svg);
+    background-repeat: no-repeat;
+    cursor: not-allowed;
+}
+
