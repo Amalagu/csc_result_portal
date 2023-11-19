@@ -22,7 +22,7 @@ def register_view(request):
 
 def login_view(request):
     if request.method == 'POST':
-        login_form = LoginForm(request, request.POST)
+        login_form = LoginForm(request.POST)
         if login_form.is_valid():
             print(login_form.cleaned_data)
             email = login_form.cleaned_data['username']
@@ -38,3 +38,8 @@ def login_view(request):
     else:
         login_form = LoginForm()
     return render(request, 'accounts/login_signup_form.html', {'form': login_form} )
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
