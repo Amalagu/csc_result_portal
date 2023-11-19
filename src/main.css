@@ -28,6 +28,45 @@ body {
     text-rendering: optimizeLegibility;
 }
 
+/* Loading Overlay */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--white);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.overlay > img {
+    animation: blink 1s infinite;
+}
+
+.spinner {
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid var(--success-700);
+    width: 100px;
+    height: 100px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+}
+
+@keyframes blink {
+    0% {opacity: 1;}
+    50% {opacity: .7;}
+    100% {opacity: 1;}  
+}
+
+@keyframes spin {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+
 /* STYLING FOR THE NAV AND HEADER. DO NOT TOUCH */
 main {
     width: 100%;
