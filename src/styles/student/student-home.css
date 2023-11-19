@@ -109,7 +109,6 @@
     .container {
         display: flex;
         flex-direction: column-reverse;
-        border: 1px solid red;
         height: calc(100vh - 9rem);
         overflow-y: scroll;
     }
@@ -130,6 +129,9 @@
     .hide-container-left {
        overflow: hidden;
        height: 0;
+    }
+    .semester-course-card {
+        width: 48.5%;
     }
 }
 
