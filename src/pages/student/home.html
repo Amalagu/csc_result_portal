@@ -20,7 +20,7 @@
                 <img src="/src/assets/logo.svg" alt="logo" width="40">
                 <div>
                     <p class="font-size-1 text-body-600 weight-600">Department of Computer Science</p>
-                    <p class="font-size-small text-body-400 weight-400">Federal University of Technolog, Owerri</p>
+                    <p class="font-size-small text-body-400 weight-400">Federal University of Technology, Owerri</p>
                 </div>
             </div>
             <ul class="nav-links">
@@ -64,35 +64,182 @@
                 </div>
             </header>
 
+            <div class="small-screen-nav-content">
+                <div class="small-search-div">
+                    <label for="search"><button class="material-symbols-rounded" id="small-search-btn">search</button></label>
+                    <input type="search" name="search" id="small-search" placeholder="Search...">
+                </div>
+                <ul class="nav-links">
+                    <li><a href="home.html" class="active"><span class="material-symbols-rounded">home</span> Home</a></li>
+                    <li><a href="courses.html"><span class="material-symbols-rounded">book_2</span> Courses</a></li>
+                    <li><a href="results.html"><span class="material-symbols-rounded">school</span> Results</a></li>
+                    <li><a href="profile.html"><span class="material-symbols-rounded">account_circle</span> Profile</a></li>
+                    <li><a href="settings.html"><span class="material-symbols-rounded">settings</span> Settings</a></li>
+                    <li><a href="/index.html"><span class="material-symbols-rounded">logout</span> Logout</a></li>
+                </ul>
+            </div>
+
+            <div class="personal-details">
+                <button class="btn-small-primary" id="toggle-btn">Show Personal Details</button>
+            </div>
+
             <div class="container">
-                <div class="small-screen-nav-content">
-                    <div class="small-search-div">
-                        <label for="search"><button class="material-symbols-rounded" id="small-search-btn">search</button></label>
-                        <input type="search" name="search" id="small-search" placeholder="Search...">
+                <div class="container-left">
+                    <div class="title">
+                        <p class="text-body-300 weight-600 font-size-5">Semester Courses</p>
                     </div>
-                    <ul class="nav-links">
-                        <li><a href="home.html" class="active"><span class="material-symbols-rounded">home</span> Home</a></li>
-                        <li><a href="courses.html"><span class="material-symbols-rounded">book_2</span> Courses</a></li>
-                        <li><a href="results.html"><span class="material-symbols-rounded">school</span> Results</a></li>
-                        <li><a href="profile.html"><span class="material-symbols-rounded">account_circle</span> Profile</a></li>
-                        <li><a href="settings.html"><span class="material-symbols-rounded">settings</span> Settings</a></li>
-                        <li><a href="/index.html"><span class="material-symbols-rounded">logout</span> Logout</a></li>
-                    </ul>
-                </div>
+                    <div class="app y-scroll">
+                        <!-- Write your code here: Do not use a <main></main> tag!!!-->
 
-                <div class="title">
-                    <p class="text-body-300 weight-600 font-size-5">Semester Courses</p>
-                </div>
+                        <!-- List of courses. Should be rendered from the database -->
+                        <div class="semester-course-card border radius">
+                            <img src="/src/assets/course_image_default.svg" alt="course-image">
+                            <p class="text-body-500 weight-600">Course title goes here</p>
+                            <p class="flex align-center gap-1">
+                                <span class="text-body-300 weight-400">CSC XYZ</span>
+                                <span class="divider"></span>
+                                <span class="text-body-200 weight-400">3 Units</span>
+                            </p>
+                        </div>
 
-                <div class="app">
-                <!-- Write your code here: Do not use a <main></main> tag!!!-->
-         
+                        <div class="semester-course-card border radius">
+                            <img src="/src/assets/course_image_default.svg" alt="course-image">
+                            <p class="text-body-500 weight-600">Course title goes here</p>
+                            <p class="flex align-center gap-1">
+                                <span class="text-body-300 weight-400">CSC XYZ</span>
+                                <span class="divider"></span>
+                                <span class="text-body-200 weight-400">3 Units</span>
+                            </p>
+                        </div>
+
+                        <div class="semester-course-card border radius">
+                            <img src="/src/assets/course_image_default.svg" alt="course-image">
+                            <p class="text-body-500 weight-600">Course title goes here</p>
+                            <p class="flex align-center gap-1">
+                                <span class="text-body-300 weight-400">CSC XYZ</span>
+                                <span class="divider"></span>
+                                <span class="text-body-200 weight-400">3 Units</span>
+                            </p>
+                        </div>
+
+                        <div class="semester-course-card border radius">
+                            <img src="/src/assets/course_image_default.svg" alt="course-image">
+                            <p class="text-body-500 weight-600">Course title goes here</p>
+                            <p class="flex align-center gap-1">
+                                <span class="text-body-300 weight-400">CSC XYZ</span>
+                                <span class="divider"></span>
+                                <span class="text-body-200 weight-400">3 Units</span>
+                            </p>
+                        </div>
+
+                        <div class="semester-course-card border radius">
+                            <img src="/src/assets/course_image_default.svg" alt="course-image">
+                            <p class="text-body-500 weight-600">Course title goes here</p>
+                            <p class="flex align-center gap-1">
+                                <span class="text-body-300 weight-400">CSC XYZ</span>
+                                <span class="divider"></span>
+                                <span class="text-body-200 weight-400">3 Units</span>
+                            </p>
+                        </div>
+                        
+                        <div class="semester-course-card border radius">
+                            <img src="/src/assets/course_image_default.svg" alt="course-image">
+                            <p class="text-body-500 weight-600">Course title goes here</p>
+                            <p class="flex align-center gap-1">
+                                <span class="text-body-300 weight-400">CSC XYZ</span>
+                                <span class="divider"></span>
+                                <span class="text-body-200 weight-400">3 Units</span>
+                            </p>
+                        </div>
+                        
+                        <div class="semester-course-card border radius">
+                            <img src="/src/assets/course_image_default.svg" alt="course-image">
+                            <p class="text-body-500 weight-600">Course title goes here</p>
+                            <p class="flex align-center gap-1">
+                                <span class="text-body-300 weight-400">CSC XYZ</span>
+                                <span class="divider"></span>
+                                <span class="text-body-200 weight-400">3 Units</span>
+                            </p>
+                        </div>
+                        
+                        <div class="semester-course-card border radius">
+                            <img src="/src/assets/course_image_default.svg" alt="course-image">
+                            <p class="text-body-500 weight-600">Course title goes here</p>
+                            <p class="flex align-center gap-1">
+                                <span class="text-body-300 weight-400">CSC XYZ</span>
+                                <span class="divider"></span>
+                                <span class="text-body-200 weight-400">3 Units</span>
+                            </p>
+                        </div>
+
+                        <div class="semester-course-card border radius">
+                            <img src="/src/assets/course_image_default.svg" alt="course-image">
+                            <p class="text-body-500 weight-600">Course title goes here</p>
+                            <p class="flex align-center gap-1">
+                                <span class="text-body-300 weight-400">CSC XYZ</span>
+                                <span class="divider"></span>
+                                <span class="text-body-200 weight-400">3 Units</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-right flex-column gap-2">
+                    <div class="student-info border radius padding-2">
+                        <img src="/src/assets/user.jpg" alt="student-image">
+                        <p class="text-body-800 weight-500 font-size-5">Student Full Name</p>
+                        <p class="text-black-300 weight-400">Student ID</p>
+                        <p class="text-black-200 weight-400 font-size-2">Class:
+                            <span class="text-black-400 weight-600">20XX-20YY</span>
+                        </p>
+                        <p class="divider-h"></p>
+                        <p class="text-black-200 weight-400 font-size-2">Advisor: 
+                            <span class="text-black-400 weight-600">Adedero Chike</span>
+                        </p>
+                    </div>
+
+                    <div class="session-info padding-1 primary-50 radius flex align-center justify-center gap-1">
+                        <div class="flex-column align-center">
+                            <p class="text-secondary-800 weight-400 font-size-4">20XX-20YY</p>
+                            <p class="text-body-200 weight-400 font-size-2">Session</p>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="flex-column align-center">
+                            <p class="text-secondary-800 weight-400 font-size-4">Harmattan</p>
+                            <p class="text-body-200 weight-400 font-size-2">Semester</p>
+                        </div>
+                    </div>
+                    <div class="notices">
+                        <div class="notices-container">
+                            <!-- List of notices. To be rendered from the Database -->
+                            <div class="notice-card primary-50 radius">
+                                <p class="text-secondary-800 weight-400 font-size-4">
+                                    XX Days Left for
+                                    course registration,
+                                    register now to access
+                                    your results
+                                </p>
+                                <button class="btn-small-primary">Register Courses</button>
+                                <img src="/src/assets/frame.svg" alt="design">
+                            </div>
+                            <div class="notice-card primary-50 radius">
+                                <p class="text-secondary-800 weight-400 font-size-4">
+                                    XX Days Left for
+                                    course registration,
+                                    register now to access
+                                    your results
+                                </p>
+                                <button class="btn-small-primary">Register Courses</button>
+                                <img src="/src/assets/frame.svg" alt="design">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <script src="/main.js"></script>
+    <script src="/src/scripts/student/student-home.js"></script>
     <!-- Add the link to your own JavaScript file below this comment -->
 </body>
 </html>
