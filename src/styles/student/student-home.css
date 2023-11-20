@@ -15,7 +15,7 @@
     flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
-    height: 100%;;
+    height: 100%;
 }
 
 .semester-course-card {
@@ -101,7 +101,7 @@
         width: 46%;
     }
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 768px) { 
     .personal-details {
         padding: 0 1rem;
         display: block;
@@ -138,10 +138,12 @@
 @media only screen and (max-width: 600px) {
     .semester-course-card {
         width: 100%;
-        height: 10rem;
+        height: 11rem;
+        display: flex;
+        flex-direction: column;
     }
     .semester-course-card > img {
-        height: 5rem;
+        height: 6.5rem;
         width: 100%;
         object-fit: cover;
     }
