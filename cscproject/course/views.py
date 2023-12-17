@@ -6,7 +6,8 @@ from .forms import CourseModelForm
 from django.http import HttpResponse
 
 # Create your views here.
-
+def view_courses(request):
+    return render(request, 'course/courses.html')
 
 def course_registeration(request):
     current_semester = Semester.objects.get(iscurrentsemester=True)

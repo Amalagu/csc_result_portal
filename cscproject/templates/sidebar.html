@@ -1,0 +1,19 @@
+{% load static %}
+{% block 'sidebar' %}
+<div class="nav--top flex align-center gap-small">
+    <img src="{% static 'img/logo.svg' %}" alt="logo" width="40">
+    <div>
+        <p class="font-size-1 text-body-600 weight-600">Department of Computer Science</p>
+        <p class="font-size-small text-body-400 weight-400">Federal University of Technology, Owerri</p>
+    </div>
+</div>
+<ul class="nav-links">
+    <li><a href="home.html"><span class="material-symbols-rounded">home</span> Home</a></li>
+    <li><a href="{% url 'view_courses' %}"><span class="material-symbols-rounded">book_2</span> Courses</a>
+    </li>
+    <li><a href="results.html"><span class="material-symbols-rounded">school</span> Results</a></li>
+    <li><a href="{% url 'view_profile' %}"><span class="material-symbols-rounded">account_circle</span> Profile</a></li>
+    <li><a href="settings.html"><span class="material-symbols-rounded">settings</span> Settings</a></li>
+    <li><a href="{% url 'logout' %}"><span class="material-symbols-rounded">logout</span> Logout</a></li>
+</ul>
+{% endblock %}

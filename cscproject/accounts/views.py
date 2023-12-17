@@ -6,6 +6,8 @@ from django.contrib.auth import login, logout, authenticate
 from .forms import LoginForm
 # Create your views here.
 
+def view_profile(request):
+    return render(request, 'accounts/profile.html')
 
 def register_view(request):
     form = StudentForm()
@@ -24,7 +26,6 @@ def login_view(request):
     if request.method == 'POST':
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
-            print(login_form.cleaned_data)
             email = login_form.cleaned_data['username']
             password = login_form.cleaned_data['password']
             user = authenticate(request, email=email, password=password)
