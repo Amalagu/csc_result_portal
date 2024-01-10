@@ -86,9 +86,9 @@ class Result(models.Model):
 
 
 class RegisteredCourse(models.Model):
-    student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
-    course_id = models.ForeignKey(Course, on_delete=models.CASCADE)
-    student_class = models.ForeignKey(StudentClass, on_delete=models.SET_NULL, null=True)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    #student_class = models.ForeignKey(StudentClass, on_delete=models.SET_NULL, null=True)
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     testscore = models.IntegerField(null=True, blank=True)

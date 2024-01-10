@@ -4,10 +4,18 @@ from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from .forms import LoginForm
+from .models import Student
 # Create your views here.
 
+def testview(request):
+    return render(request, "course-registration.html")
+
 def view_profile(request):
-    return render(request, 'accounts/profile.html')
+    student = Student.objects.get(student=request.user);
+    context = {
+        "student":student
+    }
+    return render(request, 'accounts/profile.html', context)
 
 def register_view(request):
     form = StudentForm()

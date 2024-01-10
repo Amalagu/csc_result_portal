@@ -6,8 +6,21 @@ from .forms import CourseModelForm
 from django.http import HttpResponse
 
 # Create your views here.
-def view_courses(request):
-    return render(request, 'course/courses.html')
+def view_courses(request, pk=0):
+    student = Student.objects.get(student=request.user);
+    semester = Semester.objects.get(iscurrentsemester=True)
+    session = Session.objects.get( iscurrentsession=True)
+    current_registered_semester_courses = RegisteredCourse.objects.filter(student=student, session=session, semester=semester)
+    if pk:
+        highlighted_course = RegisteredCourse.objects.get(id=pk)
+    else:
+        highlighted_course = current_registered_semester_courses.first()
+    context = {
+        'student': student,
+        'current_registered_semester_courses' : current_registered_semester_courses,
+        'highlighted_course': highlighted_course
+    }
+    return render(request, 'course/courses.html', context)
 
 def course_registeration(request):
     current_semester = Semester.objects.get(iscurrentsemester=True)

@@ -17,12 +17,12 @@
 
 <body>
     <div id="overlay" class="overlay">
-        <img src="/src/assets/logo.svg" alt="">
+        <img src="{% static 'img/logo.svg' %}" alt="">
         <div class="spinner"> </div>
     </div>
     <main>
         <nav>
-            {% included 'sidebar.html' %}
+            {% include 'sidebar.html' %}
         </nav>
         <section>
             <header>
@@ -31,7 +31,7 @@
                         <span class="material-symbols-rounded text-primary-700 pointer" id="menu">menu</span>
                     </div>
                     <div class="flex align-center gap-small">
-                        <img src="/src/assets/logo.svg" alt="logo" width="35">
+                        <img src="{static 'img/logo.svg'}" alt="logo" width="35">
                         <p class="text-primary weight-600 font-size-5">CSC-FUTO</p>
                     </div>
                 </div>
@@ -46,11 +46,11 @@
                     </div>
                     <div class="details flex gap-1 align-center">
                         <div class="image-container hidden">
-                            <img src="/src/assets/user.jpg" alt="user-image" class="fit rounded">
+                            <img src="{% static 'img/user.jpg' %}" alt="user-image" class="fit rounded">
                         </div>
                         <div class="user-info">
-                            <p class="font-size-1 text-body-800 weight-600">Amalagu Cosmos</p>
-                            <p class="font-size-small text-body-200 weight-400">amalagucosmos@example.com</p>
+                            <p class="font-size-1 text-body-800 weight-600">{{student.student.get_full_name}}</p>
+                            <p class="font-size-small text-body-200 weight-400">{{student.student.email}}</p>
                         </div>
                     </div>
                 </div>

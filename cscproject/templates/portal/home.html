@@ -59,104 +59,26 @@
                         <!-- Write your code here: Do not use a <main></main> tag!!!-->
 
                         <!-- List of courses. Should be rendered from the database -->
+                        {% for course in current_registered_semester_courses %}
                         <div class="semester-course-card border radius">
                             <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
+                            <p class="text-body-500 weight-600">{{course.course.title}}</p>
                             <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
+                                <span class="text-body-300 weight-400">{{course.course.code}}</span>
                                 <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
+                                <span class="text-body-200 weight-400">{{course.course.unit}} Units</span>
                             </p>
                         </div>
-
-                        <div class="semester-course-card border radius">
-                            <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
-                            <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
-                                <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
-                            </p>
-                        </div>
-
-                        <div class="semester-course-card border radius">
-                            <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
-                            <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
-                                <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
-                            </p>
-                        </div>
-
-                        <div class="semester-course-card border radius">
-                            <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
-                            <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
-                                <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
-                            </p>
-                        </div>
-
-                        <div class="semester-course-card border radius">
-                            <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
-                            <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
-                                <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
-                            </p>
-                        </div>
-
-                        <div class="semester-course-card border radius">
-                            <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
-                            <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
-                                <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
-                            </p>
-                        </div>
-
-                        <div class="semester-course-card border radius">
-                            <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
-                            <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
-                                <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
-                            </p>
-                        </div>
-
-                        <div class="semester-course-card border radius">
-                            <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
-                            <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
-                                <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
-                            </p>
-                        </div>
-
-                        <div class="semester-course-card border radius">
-                            <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
-                            <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
-                                <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
-                            </p>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="container-right flex-column gap-2">
                     <div class="student-info border radius padding-2">
                         <img src="{% static 'img/user.jpg' %}" alt="student-image">
-                        <p class="text-body-800 weight-500 font-size-5">Student Full Name</p>
-                        <p class="text-black-300 weight-400">Student ID</p>
+                        <p class="text-body-800 weight-500 font-size-5">{{student.student.get_full_name}}</p>
+                        <p class="text-black-300 weight-400">{{student.registeration_number}}</p>
                         <p class="text-black-200 weight-400 font-size-2">Class:
-                            <span class="text-black-400 weight-600">20XX-20YY</span>
+                            <span class="text-black-400 weight-600">{{student.student_class}}</span>
                         </p>
                         <p class="divider-h"></p>
                         <p class="text-black-200 weight-400 font-size-2">Advisor:
@@ -166,12 +88,12 @@
 
                     <div class="session-info padding-1 primary-50 radius flex align-center justify-center gap-1">
                         <div class="flex-column align-center">
-                            <p class="text-secondary-800 weight-400 font-size-4">20XX-20YY</p>
+                            <p class="text-secondary-800 weight-400 font-size-4">{{current_session}}</p>
                             <p class="text-body-200 weight-400 font-size-2">Session</p>
                         </div>
                         <div class="divider"></div>
                         <div class="flex-column align-center">
-                            <p class="text-secondary-800 weight-400 font-size-4">Harmattan</p>
+                            <p class="text-secondary-800 weight-400 font-size-4">{{current_semester}}</p>
                             <p class="text-body-200 weight-400 font-size-2">Semester</p>
                         </div>
                     </div>

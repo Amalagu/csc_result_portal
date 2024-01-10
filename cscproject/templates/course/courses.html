@@ -64,82 +64,19 @@
                     </div>
 
                     <div class="app">
+                        {% for course in current_registered_semester_courses %}
                         <div class="semester-course-card border radius">
-                            <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
+                            <a href="{% url 'view_courses' pk=course.id %}"><img
+                                    src="{% static 'img/course_image_default.svg' %}" alt="course-image"></a>
+                            <p class="text-body-500 weight-600">{{course.course.title}}</p>
                             <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
+                                <span class="text-body-300 weight-400">{{course.course.code}}</span>
                                 <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
+                                <span class="text-body-200 weight-400">{{course.course.unit}} Units</span>
                             </p>
                             <button class="btn-small view-full-details">View Details</button>
                         </div>
-
-                        <div class="semester-course-card border radius">
-                            <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
-                            <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
-                                <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
-                            </p>
-                            <button class="btn-small view-full-details">View Details</button>
-                        </div>
-
-                        <div class="semester-course-card border radius">
-                            <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
-                            <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
-                                <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
-                            </p>
-                            <button class="btn-small view-full-details">View Details</button>
-                        </div>
-
-                        <div class="semester-course-card border radius">
-                            <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
-                            <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
-                                <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
-                            </p>
-                            <button class="btn-small view-full-details">View Details</button>
-                        </div>
-
-                        <div class="semester-course-card border radius">
-                            <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
-                            <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
-                                <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
-                            </p>
-                            <button class="btn-small view-full-details">View Details</button>
-                        </div>
-
-                        <div class="semester-course-card border radius">
-                            <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
-                            <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
-                                <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
-                            </p>
-                            <button class="btn-small view-full-details">View Details</button>
-                        </div>
-
-                        <div class="semester-course-card border radius">
-                            <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
-                            <p class="text-body-500 weight-600">Course title goes here</p>
-                            <p class="flex align-center gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
-                                <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
-                            </p>
-                            <button class="btn-small">View Details</button>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
 
@@ -244,11 +181,11 @@
                             <img src="{% static 'img/course_image_default.svg' %}" alt="course-image">
                         </div>
                         <div class="flex-column justify-center gap-1">
-                            <p class="text-body-500 weight-600 font-size-4">Course Title goes here</p>
+                            <p class="text-body-500 weight-600 font-size-4">{{highlighted_course.course.title}}</p>
                             <p class="flex gap-1">
-                                <span class="text-body-300 weight-400">CSC XYZ</span>
+                                <span class="text-body-300 weight-400">{{highlighted_course.course.code}}</span>
                                 <span class="divider"></span>
-                                <span class="text-body-200 weight-400">3 Units</span>
+                                <span class="text-body-200 weight-400">{{highlighted_course.course.unit}} Units</span>
                             </p>
                         </div>
                     </div>

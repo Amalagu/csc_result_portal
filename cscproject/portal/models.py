@@ -25,7 +25,7 @@ class StudentClass(models.Model):
     enrollment_year = models.CharField(max_length=4)
 
     def __str__(self):
-        return f'Class of {self.class_set}'
+        return f'{self.class_set} Set'
 
 
 class Session(models.Model):
