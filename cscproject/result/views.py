@@ -1,17 +1,47 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import os
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
 import pandas as pd
+
+from .forms import UploadFileForm
+from decorators.account_decorators import advisor_required, student_required
 from accounts.models import Student, User
 from result.models import RegisteredCourse
 from course.models import Course
-# Create your views here.
 
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
 
-from .forms import UploadFileForm
+@student_required
+def student_view_result(request):
+    return render(request, 'result/student-result-page.html')
 
+@advisor_required
+def advisor_view_result(request):
+    return render(request, "result/advisor-result-page.html")
+
+@advisor_required
+def view_all_courses_semester_result(request):
+    return render(request, "result/advisor-semester-result-sheet.html")
+
+
+@advisor_required
+def view_cgpa_summary(request):
+    return render(request, "result/advisor-cgpa-summary.html")
+
+@advisor_required
+def view_generated_transcript(request, pk=0):
+    return render(request, "result/advisor-generated-transcript.html")
+
+
+@advisor_required
+def view_generated_transcript_list(request):
+    return render(request, "result/advisor-list-generated-transcript.html")
+
+
+@advisor_required
+def view_single_course_result(request):
+    return render(request, "result/advisor-single-course-result.html")
 
 class pd():
     def read_excel(self):

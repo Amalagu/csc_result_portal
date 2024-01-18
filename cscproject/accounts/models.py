@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 from portal.models import StudentClass #, DepartmentalDues
+#from result.models import Result
+
 
 # Create your models here.
 
@@ -101,9 +103,30 @@ class Student(models.Model):
         ('500 LEVEL', '500 LEVEL')
     )
     student = models.OneToOneField(User, on_delete=models.CASCADE)
-    student_class = models.ForeignKey(StudentClass, null=True, blank=True, on_delete=models.SET_NULL)
+    student_class = models.ForeignKey(StudentClass, null=True, blank=True, on_delete=models.SET_NULL, related_name='students')
     registeration_number = models.CharField(max_length=11, null=False, blank=False, primary_key=True, unique=True)
     level = models.CharField(max_length=25, choices=level_list, null=True)
+
+    cgpa = models.FloatField(null=True, blank=True)
+
+    def update_cgpa(self):
+        from result.models import Result
+        results = Result.objects.filter(student=self)
+        if results.exists():
+            total_gpa = sum(result.cgpa for result in results if result.cgpa is not None)
+            new_cgpa = total_gpa / results.count()
+        else:
+            new_cgpa = None
+
+        # Check if the cgpa has changed before saving
+        if self.cgpa != new_cgpa:
+            self.cgpa = new_cgpa
+            self.save()
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.update_cgpa()
+
 
     def __str__(self):
         return self.student.get_full_name
@@ -115,3 +138,6 @@ class Advisor(models.Model):
     advisor_class = models.ForeignKey(StudentClass, null= True, on_delete=models.SET_NULL)
     staffid = models.CharField(max_length=12, unique=True, blank=False, null=False)
     designation = models.CharField(max_length=10, choices=designation_list)
+
+    def __str__(self):
+        return self.advisor.get_full_name

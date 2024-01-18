@@ -1,21 +1,67 @@
 from django.shortcuts import render, redirect
+
 from .forms import UserCreationForm, StudentForm
 from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
+
+from decorators.account_decorators import student_required, advisor_required
 from .forms import LoginForm
-from .models import Student
+from .models import Student, Advisor
 # Create your views here.
+
+
+"""from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import Student, Advisor
+
+@login_required
+def dashboard_view(request):
+    user = request.user
+
+    # Check if the user is a student
+    try:
+        student = Student.objects.get(student=user)
+        return render(request, 'student_dashboard.html', {'student': student})
+    except Student.DoesNotExist:
+        pass
+
+    # Check if the user is an advisor
+    try:
+        advisor = Advisor.objects.get(advisor=user)
+        return render(request, 'advisor_dashboard.html', {'advisor': advisor})
+    except Advisor.DoesNotExist:
+        pass
+
+    # If the user is neither a student nor an advisor, you can handle it accordingly
+    return render(request, 'unauthorized.html')
+"""
+
+
 
 def testview(request):
     return render(request, "course-registration.html")
 
-def view_profile(request):
+
+@student_required
+def view_student_profile(request):
     student = Student.objects.get(student=request.user);
     context = {
         "student":student
     }
     return render(request, 'accounts/profile.html', context)
+
+
+@advisor_required
+def view_advisor_profile(request):
+    advisor = Advisor.objects.get(advisor=request.user);
+    context = {
+        "advisor":advisor
+    }
+    return render(request, 'accounts/advisor-profile.html', context)
+
+
 
 def register_view(request):
     form = StudentForm()
@@ -39,16 +85,22 @@ def login_view(request):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                if hasattr(user, 'student'):
+                    return redirect('home')
+                # Check if the user is an Advisor
+                elif hasattr(user, 'advisor'):
+                    return redirect('advisor_home')
             else:
+                messages.error(request, 'Invalid username or password')
                 print('Username not found')
         else:
             print('Username does not exist')
     else:
         login_form = LoginForm()
-    return render(request, 'accounts/login_signup_form.html', {'form': login_form} )
+    return render(request, 'accounts/newlogin.html', {'form': login_form} )
 
 
 def logout_view(request):
     logout(request)
+    print("USER IS LOGGED OUT")
     return redirect('home')

@@ -1,62 +1,25 @@
-const loginBtn = document.querySelector('#login-submit');
-const username = document.getElementById('username');
-const password = document.getElementById('password');
-const usernameSpan = document.getElementById('username-label');
-const passwordSpan = document.getElementById('password-label');
+/* import { toggleOverlay } from './scripts/loader.js'
+import { overlay } from './scripts/overlay.js'
+import { logoComponent } from './scripts/logo-component.js'
+import { onNavPopup, onSidebarPopup } from './scripts/popup.js'
 
-const menu = document.querySelector('#menu');
-const smallNav = document.querySelector('.small-screen-nav-content');
-const smallSearch = document.querySelector('#small-search');
+overlay('overlay')
+toggleOverlay('overlay')
+logoComponent('logo-component')
+onNavPopup('nav')
 
-menu.addEventListener('click', showMobileNav);
-
-
-function loginAuthentication() {
-    //Authentication code
-}
+if (document.getElementById('details')) {onSidebarPopup('#details')} */
 
 
-function showMobileNav() {
-    smallNav.classList.toggle('show-nav')
-}
 
-document.body.addEventListener('click', (e) => {
-    if (smallNav.classList.contains('show-nav')) {
-        if (e.target === menu || e.target === smallNav || e.target === smallSearch) {
-            return
-        } else {
-            smallNav.classList.remove('show-nav')
-        }
-    } else {
-        return
-    }
-})
+import { toggleOverlay } from './loader.js'
+import { overlay } from './overlay.js'
+import { logoComponent } from './logo-component.js'
+import { onNavPopup, onSidebarPopup } from './popup.js'
 
-loginBtn.addEventListener('click', (e)=>{
-    e.preventDefault();
-    if (username.value === "") {
-        usernameSpan.hidden = false;
-        username.style.border = "1px solid var(--danger)";
-    } else {
-        usernameSpan.hidden = true;
-        username.style.border = "1px solid var(--body-200)";
-    }
-    
-    if (password.value === "") {
-        passwordSpan.hidden = false;
-        password.style.border = "1px solid var(--danger)";
+overlay('overlay')
+toggleOverlay('overlay')
+logoComponent('logo-component')
+onNavPopup('nav')
 
-    } else {
-        passwordSpan.hidden = true;
-        password.style.border = "1px solid var(--body-200)";
-    }
-
-    if (username.value !== "" && password.value !=="") {
-        usernameSpan.hidden = true;
-        passwordSpan.hidden = true;
-        username.style.border = "1px solid var(--body-200)";
-        password.style.border = "1px solid var(--body-200)";
-
-        loginAuthentication();
-    }
-})
+if (document.getElementById('details')) {onSidebarPopup('#details')}

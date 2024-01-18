@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 from .forms import UserChangeForm, UserCreationForm
-from .models import User, Student
+from .models import User, Student, Advisor
 # Register your models here.
 
 
@@ -35,3 +35,4 @@ class UserAdmin(UserAdmin):
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Student)
+admin.site.register(Advisor)

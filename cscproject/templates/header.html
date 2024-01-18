@@ -1,33 +1,40 @@
 {% load static %}
 
 {% block 'header' %}
-<div class="small-screen-nav flex align-center gap-2">
-    <div>
-        <span class="material-symbols-rounded text-primary-700 pointer" id="menu">menu</span>
-    </div>
-    <div class="flex align-center gap-small">
-        <img src="{% static 'img/logo.svg' %}" alt="logo" width="35">
-        <p class="text-primary weight-600 font-size-5">CSC-FUTO</p>
-    </div>
-</div>
-<div class="search-div">
-    <label for="search"><button class="material-symbols-rounded" id="search-btn">search</button></label>
-    <input type="search" name="search" id="search" placeholder="Search...">
-</div>
-<div class="top-right flex align-center gap-2">
-    <div class="icons flex align-center gap-2">
-        <a href="profile.html"><span class="material-symbols-rounded">account_circle</span></a>
-        <a href="settings.html"><span class="material-symbols-rounded">settings</span></a>
+<header class="h-12 bg-white flex items-center justify-between p-2 fixed w-screen top-0 z-50
+            xl:relative xl:w-full">
+    <div class="flex items-center gap-2 xl:hidden">
+        <span x-on:click="navIsOpen = true"
+            class="material-symbols-rounded text-body-800 cursor-pointer hover:text-[var(--primary-700)] transition">
+            menu
+        </span>
+        <img src="{% static 'img/logo.svg' %}" alt="logo" width="26">
     </div>
 
-    <div class="details flex gap-1 align-center">
-        <div class="image-container hidden">
-            <img src="{% static 'img/user.jpg' %}" alt="user-image" class="fit rounded">
+    <div class="relative">
+        <label for="search"
+            class="material-symbols-rounded overflow-hidden absolute left-1 top-[.3rem] text-body-400 text-[1.4rem]">
+            search
+        </label>
+        <input type="search" id="search" placeholder="Search..." class="rounded bg-[var(--primary-50)] text-body-400 outline-none h-8 w-full pl-7 pr-2 placeholder:text-[var(--body-200)]
+                    md:w-[30rem]">
+    </div>
+
+    <div class="flex items-center gap-1">
+        <img src="{% static 'img/user.jpg' %}" alt="user_img" class="w-7 rounded-full">
+
+        <div class="hidden lg:block">
+            <p class="text-xs font-semibold text-body-800 whitespace-nowrap text-ellipsis overflow-hidden">
+                {{request.user.get_full_name}}</p>
+            <p class="text-xs text-body-300">{{request.user.email}}</p>
         </div>
-        <div class="user-info">
-            <p class="font-size-1 text-body-800 weight-600">{{student}}</p>
-            <p class="font-size-small text-body-200 weight-400">{{ request.user.email}}</p>
+
+        <div class="flex center">
+            <span x-on:click="open = !open" x-text="open ? 'expand_less' : 'expand_more'"
+                class="material-symbols-rounded text-body-800 cursor-pointer select-none hover:text-[var(--primary-700)]">
+                expand_more
+            </span>
         </div>
     </div>
-</div>
+</header>
 {% endblock %}

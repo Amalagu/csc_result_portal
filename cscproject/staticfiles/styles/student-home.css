@@ -1,0 +1,150 @@
+.personal-details {
+    display: none;
+}
+.container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+.container-left {
+    height: 100%;
+    overflow: hidden;
+}
+.app {
+    padding: 2rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    height: 100%;
+}
+
+.semester-course-card {
+    width: 31%;
+    overflow: hidden;
+}
+.semester-course-card > p {
+    margin: .4rem;
+}
+.divider {
+    width: 1px;
+    height: 1rem;
+    border: var(--border);
+}
+.divider-h {
+    width: 50%;
+    border: var(--border);
+}
+.container-right {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+.student-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .6rem;
+}
+.student-info > img {
+    aspect-ratio: 1/1;
+    width: 8rem;
+    border-radius: var(--rounded);
+    object-fit: cover;
+}
+.session-info > .divider {
+    height: 1.5rem;
+    border: 1px solid var(--secondary-900);
+    opacity: .7;
+}
+.notices {
+    height: 100%;
+}
+.notices-container {
+    height: 100%;
+    flex-grow: 1;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    display: flex;
+    gap: 1rem;
+    scroll-snap-type: x mandatory;
+}
+.notice-card {
+    scroll-snap-align: center;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    flex-shrink: 0;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.notice-card > p {
+    width: 70%;
+}
+.notice-card > img {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 40%;
+}
+
+
+@media only screen and (max-width: 1250px) {
+    .container {
+        grid-template-columns: 2fr 1fr;
+    }
+    .semester-course-card {
+        width: 46%;
+    }
+}
+@media only screen and (max-width: 768px) { 
+    .personal-details {
+        padding: 0 1rem;
+        display: block;
+    }
+    .container {
+        display: flex;
+        flex-direction: column-reverse;
+        height: calc(100vh - 9rem);
+        overflow-y: scroll;
+    }
+    .container-right {
+        height: 0;
+        overflow: hidden;
+        transition: all .6s ease;
+    }
+    .show-container-right {
+        height: 100%;
+        overflow-y: scroll;
+        padding-bottom: 2rem;
+    }
+    .container-left {
+        height: 100%;
+        transition: all .6s ease;
+    }
+    .hide-container-left {
+       overflow: hidden;
+       height: 0;
+    }
+    .semester-course-card {
+        width: 48.5%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .semester-course-card {
+        width: 100%;
+        height: 11rem;
+        display: flex;
+        flex-direction: column;
+    }
+    .semester-course-card > img {
+        height: 6.5rem;
+        width: 100%;
+        object-fit: cover;
+    }
+}

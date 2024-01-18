@@ -43,9 +43,10 @@ class Result(models.Model):
     gpa = models.FloatField(null=True, blank=True)
     cgpa = models.FloatField(null=True, blank=True)
     level = models.CharField(max_length=25, choices=level_list, blank=True, null=True)
+    student_class = models.ForeignKey(StudentClass, on_delete=models.SET_NULL, blank=True, null=True)
 
     @staticmethod
-    def calculate_gpa(student_id, session, semester):
+    def calculate_semester_gpa(student_id, session, semester):
         """static function to calculate the cgpa of a student for a particular
         semester in a session. You pass in the student's reg_number, a session object,
         and a semester object
@@ -72,6 +73,9 @@ class Result(models.Model):
         for other instances of their results for previous semesters.
         """
         results = Result.objects.filter(student__registeration_number=student_id).order_by('-id')
+        if not results:
+        # No results available, return a default CGPA (i.e 5.0)
+            return 5.0
         most_recent_result = results.first()    #GET THE MOST RECENT RESULT
         total_points = sum(result.gpa for result in results)
         total_courses = len(results)
@@ -80,6 +84,12 @@ class Result(models.Model):
         most_recent_result.save()
         return cgpa
     
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.student.update_cgpa()
+        
+
     def __str__(self):
         return f"{self.student.student.get_full_name} {self.semester.name} Results - {self.session.name} "
 
@@ -100,7 +110,7 @@ class RegisteredCourse(models.Model):
     result = models.ForeignKey(Result, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return self.student_id.student.get_full_name + ' - ' + self.course_id.code
+        return self.student.student.get_full_name + ' - ' + self.course.code
     
     def save(self, *args, **kwargs):
         #Automatically create or update the related Result when saving ReigisteredCourse
