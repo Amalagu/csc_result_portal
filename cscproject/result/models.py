@@ -45,6 +45,9 @@ class Result(models.Model):
     level = models.CharField(max_length=25, choices=level_list, blank=True, null=True)
     student_class = models.ForeignKey(StudentClass, on_delete=models.SET_NULL, blank=True, null=True)
 
+    class Meta:
+        unique_together = ('student', 'session', 'semester')
+
     @staticmethod
     def calculate_semester_gpa(student_id, session, semester):
         """static function to calculate the cgpa of a student for a particular
@@ -108,6 +111,9 @@ class RegisteredCourse(models.Model):
     grade = models.CharField(max_length=1, choices=grade_list, null=True, blank=True)
     remark = models.CharField(max_length=4, default='PASS', choices=remark_list)
     result = models.ForeignKey(Result, on_delete=models.SET_NULL, null=True, blank=True)
+
+    class Meta:
+        unique_together = ('student', 'course', 'session', 'semester')
 
     def __str__(self):
         return self.student.student.get_full_name + ' - ' + self.course.code

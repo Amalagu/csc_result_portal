@@ -97,12 +97,19 @@
                                 <th>Type</th>
                             </thead>
                             <tbody>
+                                {% for course in all_current_semester_registered_courses %}
                                 <tr>
-                                    <td>CSC 509</td>
-                                    <td>Net-centric Computing and Data Security</td>
-                                    <td>2</td>
+                                    <td>{{course.course.code}}</td>
+                                    <td>{{course.course.title}}</td>
+                                    <td>{{course.course.unit}}</td>
+                                    {% if course.course.iselective %}
+                                    <td class="uppercase">Elective</td>
+                                    {% else %}
                                     <td class="uppercase">Compulsory</td>
+
+                                    {% endif %}
                                 </tr>
+                                {% endfor %}
 
                                 <tr>
                                     <td></td>
@@ -110,6 +117,7 @@
                                     <td>21</td>
                                     <td></td>
                                 </tr>
+
                             </tbody>
                         </table>
                     </div>

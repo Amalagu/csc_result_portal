@@ -27,7 +27,11 @@ from django.http import HttpResponse
 
 @student_required
 def view_course_registeration_details(request, session, semester):
-    return render(request, 'course/course-registration-details.html')
+    all_current_semester_registered_courses = RegisteredCourse.objects.filter(session=session, semester=semester, student=request.user.student)
+    context={
+        'all_current_semester_registered_courses' : all_current_semester_registered_courses,
+    }
+    return render(request, 'course/course-registration-details.html', context)
 
 
 @student_required
