@@ -26,13 +26,18 @@ from django.http import HttpResponse
 
 
 @student_required
-def view_course_registeration_details(request, pk=0):
+def view_course_registeration_details(request, session, semester):
     return render(request, 'course/course-registration-details.html')
 
 
 @student_required
 def view_course_registerations(request):
-    return render(request, 'course/courses.html')
+    registered_semesters = RegisteredCourse.objects.values('session', 'semester', 'student__level').distinct()
+    print(registered_semesters)
+    context = {
+        'registered_semesters': registered_semesters,
+        }
+    return render(request, 'course/courses.html', context)
 
 
 @student_required

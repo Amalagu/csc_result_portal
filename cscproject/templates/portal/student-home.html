@@ -60,7 +60,7 @@
                                 <p>CGPA</p>
                             </div>
                             <div class="flex justify-end text-danger-300">
-                                <p class="text-[2.5rem] font-semiboold">4.55 {{most_recent_cgpa}}</p>
+                                <p class="text-[2.5rem] font-semiboold">{{most_recent_cgpa}}</p>
                             </div>
                         </div>
                     </div>
@@ -115,12 +115,12 @@
                                 {{student.student.get_full_name}}
                             </h1>
                             <p class="text-slate-800">
-                                Student Reg Number
+                                {{student.registeration_number}}
                             </p>
                             <p class="text-slate-600 text-sm">
                                 Class:
                                 <span class="font-semibold text-slate-800">
-                                    20XX-20YY
+                                    {{current_session}}
                                 </span>
                             </p>
                             <p class="text-slate-600 text-sm">Advisor:
@@ -133,12 +133,12 @@
 
                     <div class="bg-primary-50 rounded flex items-center justify-center p-1 gap-4">
                         <div class="flex flex-col items-center justify-end">
-                            <p class="text-secondary-800 text-lg">20XX/20YY</p>
+                            <p class="text-secondary-800 text-lg">{{current_session}}</p>
                             <p class="text-body-300">session</p>
                         </div>
                         <span class="bg-secondary-800 w-[1px] h-10"></span>
                         <div class="flex flex-col items-center justify-end">
-                            <p class="text-secondary-800 text-lg">Harmattan</p>
+                            <p class="text-secondary-800 text-lg">{{current_semester}}</p>
                             <p class="text-body-300">semester</p>
                         </div>
                     </div>

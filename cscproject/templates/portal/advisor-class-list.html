@@ -59,6 +59,7 @@
 
                         <ul
                             class="row-span-6 mt-4 border-b border-b-[var(--black-100)] overflow-y-scroll lg:row-span-5">
+                            {% for student in all_students_info %}
                             <li @click="detailsOpen = true" class="flex items-center gap-3 p-2 border-t border-t-[var(--black-100)] cursor-pointer transition hover:rounded hover:bg-[var(--primary-50)]
                             lg:grid lg:grid-cols-4 lg:py-1">
                                 <div class="shrink-0 grid center
@@ -71,7 +72,7 @@
                                 lg:col-span-3">
                                     <h1
                                         class="font-semibold text-body-300 text-base overflow-hidden whitespace-nowrap text-ellipsis lg:text-[.9rem]">
-                                        Student Full Name
+                                        {{student.student__last_name}} {{student.student__first_name}}
                                     </h1>
                                     <p class="text-sm text-body-300 lg:text-[0.8rem]">
                                         Student ID
@@ -86,6 +87,7 @@
                                     </div>
                                 </div>
                             </li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>

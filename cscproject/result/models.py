@@ -55,7 +55,7 @@ class Result(models.Model):
         student=Student.objects.get(registeration_number=student_id)
         result = Result.objects.filter(student=student, session=session, semester=semester).first()
         if result:
-            courses = RegisteredCourse.objects.filter(result=result)
+            courses = RegisteredCourse.objects.filter(result=result).exclude(grade__isnull= True)
             total_unit = sum(course.course_id.unit for course in courses)
             total_points = sum(course.course_id.unit * grade_dict.get(course.grade, 0) for course in courses)
             gpa = total_points / total_unit if total_unit != 0 else 0.0

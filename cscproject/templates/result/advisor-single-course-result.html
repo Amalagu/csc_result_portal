@@ -48,33 +48,43 @@
                         </button>
                     </form>
 
-                    <form action="" class="flex items-end flex-wrap gap-2 md:w-[32rem]" id="result-options-form">
-                        <div class="select flex-grow">
+                    <form action='' class="flex items-end flex-wrap gap-x-2 md:w-[34rem]" id="result-options-form"
+                        method="GET">
+                        {% csrf_token %}
+                        <div class="select grow">
                             <label for="session">Session</label>
                             <select name="session" id="session" class="w-full">
                                 <option value="" class>Select session</option>
-                                <option value="2019-2020">2019-2020</option>
-                                <option value="2018-2019">2018-2019</option>
+                                {% for session in sessions %}
+                                <option value={{session.name}}>{{session.name}}</option>
+                                {% endfor %}
                             </select>
                         </div>
 
-                        <div class="select flex-grow">
+                        <div class="select grow">
                             <label for="semester">Semester</label>
                             <select name="semester" id="semester" class="w-full">
-                                <option value="harmattan">Harmattan</option>
-                                <option value="rain">Rain</option>
+                                <option value="">Select semester</option>
+                                {% for semester in semesters %}
+                                <option value={{semester.name}}>{{semester.name}}</option>
+                                {% endfor %}
                             </select>
                         </div>
 
-                        <div class="select flex-grow">
+                        <div class="select grow">
                             <label for="course">Course</label>
                             <select name="course" id="course" class="w-full">
-                                <option value="1">MTH 101</option>
+                                <option value="">Select course</option>
+                                <option value="all">All courses</option>
+                                {% for course in courses %}
+                                <option value={{course.id}}>{{course.code}}</option>
+                                {% endfor %}
                             </select>
                         </div>
 
                         <button type="submit"
-                            class="btn-sm text-white bg-[var(--primary)] hover:bg-[var(--primary-700)] transition rounded h-8">
+                            class="btn-sm text-white bg-[var(--primary)] hover:bg-[var(--primary-700)] transition rounded h-8"
+                            disabled>
                             View Result
                         </button>
                     </form>
@@ -101,162 +111,21 @@
                             <th class="w-10">Remark</th>
                         </thead>
                         <tbody>
+                            {% for result in selected_course_result %}
                             <tr>
                                 <td>1</td>
-                                <td>Amalagu Chikezie Simon</td>
-                                <td>20181097185</td>
+                                <td>{{result.student.student.get_full_name}}</td>
+                                <td>{{result.student.registeration_number}}</td>
                                 <td>CSC</td>
-                                <td>20</td>
-                                <td>20</td>
-                                <td>60</td>
-                                <td>100</td>
-                                <td>A</td>
-                                <td>PASS</td>
+                                <td>{{result.testscore}}</td>
+                                <td>{{result.labscore}}</td>
+                                <td>{{result.examscore}}</td>
+                                <td>{{result.totalscore}}</td>
+                                <td>{{result.grade}}</td>
+                                <td>{{result.remark}}</td>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Amalagu Chikezie Simon</td>
-                                <td>20181097185</td>
-                                <td>CSC</td>
-                                <td>20</td>
-                                <td>20</td>
-                                <td>60</td>
-                                <td>100</td>
-                                <td>A</td>
-                                <td>PASS</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Amalagu Chikezie Simon</td>
-                                <td>20181097185</td>
-                                <td>CSC</td>
-                                <td>20</td>
-                                <td>20</td>
-                                <td>60</td>
-                                <td>100</td>
-                                <td>A</td>
-                                <td>PASS</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Amalagu Chikezie Simon</td>
-                                <td>20181097185</td>
-                                <td>CSC</td>
-                                <td>20</td>
-                                <td>20</td>
-                                <td>60</td>
-                                <td>100</td>
-                                <td>A</td>
-                                <td>PASS</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Amalagu Chikezie Simon</td>
-                                <td>20181097185</td>
-                                <td>CSC</td>
-                                <td>20</td>
-                                <td>20</td>
-                                <td>60</td>
-                                <td>100</td>
-                                <td>A</td>
-                                <td>PASS</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Amalagu Chikezie Simon</td>
-                                <td>20181097185</td>
-                                <td>CSC</td>
-                                <td>20</td>
-                                <td>20</td>
-                                <td>60</td>
-                                <td>100</td>
-                                <td>A</td>
-                                <td>PASS</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Amalagu Chikezie Simon</td>
-                                <td>20181097185</td>
-                                <td>CSC</td>
-                                <td>20</td>
-                                <td>20</td>
-                                <td>60</td>
-                                <td>100</td>
-                                <td>A</td>
-                                <td>PASS</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Amalagu Chikezie Simon</td>
-                                <td>20181097185</td>
-                                <td>CSC</td>
-                                <td>20</td>
-                                <td>20</td>
-                                <td>60</td>
-                                <td>100</td>
-                                <td>A</td>
-                                <td>PASS</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Amalagu Chikezie Simon</td>
-                                <td>20181097185</td>
-                                <td>CSC</td>
-                                <td>20</td>
-                                <td>20</td>
-                                <td>60</td>
-                                <td>100</td>
-                                <td>A</td>
-                                <td>PASS</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Amalagu Chikezie Simon</td>
-                                <td>20181097185</td>
-                                <td>CSC</td>
-                                <td>20</td>
-                                <td>20</td>
-                                <td>60</td>
-                                <td>100</td>
-                                <td>A</td>
-                                <td>PASS</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Amalagu Chikezie Simon</td>
-                                <td>20181097185</td>
-                                <td>CSC</td>
-                                <td>20</td>
-                                <td>20</td>
-                                <td>60</td>
-                                <td>100</td>
-                                <td>A</td>
-                                <td>PASS</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Amalagu Chikezie Simon</td>
-                                <td>20181097185</td>
-                                <td>CSC</td>
-                                <td>20</td>
-                                <td>20</td>
-                                <td>60</td>
-                                <td>100</td>
-                                <td>A</td>
-                                <td>PASS</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Amalagu Chikezie Simon</td>
-                                <td>20181097185</td>
-                                <td>CSC</td>
-                                <td>20</td>
-                                <td>20</td>
-                                <td>60</td>
-                                <td>100</td>
-                                <td>A</td>
-                                <td>PASS</td>
-                            </tr>
+                            {% endfor %}
+
                         </tbody>
                     </table>
                 </div>

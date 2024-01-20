@@ -21,6 +21,7 @@ level_list = (
     )
 
 
+
 class Course(models.Model):
     code = models.CharField(max_length=7, unique=True, blank=False, null=False)
     title = models.CharField(max_length=140, blank=False, null=False)

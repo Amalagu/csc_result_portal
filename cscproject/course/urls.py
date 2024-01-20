@@ -9,6 +9,6 @@ urlpatterns = [
     path('add/', add_course, name='add_course'),
     path('register/', course_registeration, name='course_registeration' ),
     path('register-borrowed-course/', course_registeration_borrow_course, name='course_registeration_borrow_course' ),
-    path('view/<int:pk>', view_course_registeration_details, name='view_course_registeration_details'),
+    path('view/<str:session>/<str:semester>/', view_course_registeration_details, name='view_course_registeration_details'),
     path('view/', view_course_registerations, name='view_course_registerations')
 ]

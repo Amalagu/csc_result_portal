@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 
 from decorators.account_decorators import student_required, advisor_required
-from .forms import LoginForm
+from .forms import LoginForm, UserModelForm
 from .models import Student, Advisor
 # Create your views here.
 
@@ -53,13 +53,38 @@ def view_student_profile(request):
     return render(request, 'accounts/profile.html', context)
 
 
+
+
 @advisor_required
 def view_advisor_profile(request):
-    advisor = Advisor.objects.get(advisor=request.user);
+    advisor = Advisor.objects.get(advisor=request.user)
+
+    if request.method == 'POST':
+        form = UserModelForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('view_advisor_profile')  # Redirect to the advisor profile page or wherever you want
+    else:
+        form = UserModelForm(instance=request.user)
+
     context = {
-        "advisor":advisor
+        "advisor": advisor,
+        'form': form
     }
     return render(request, 'accounts/advisor-profile.html', context)
+
+
+
+""" @advisor_required
+def view_advisor_profile(request):
+    advisor = Advisor.objects.get(advisor=request.user);
+    form = UserModelForm(instance=advisor)
+    
+    context = {
+        "advisor":advisor,
+        'form': form
+    }
+    return render(request, 'accounts/advisor-profile.html', context) """
 
 
 

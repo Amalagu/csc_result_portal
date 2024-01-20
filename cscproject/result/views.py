@@ -7,9 +7,10 @@ import pandas as pd
 
 from .forms import UploadFileForm
 from decorators.account_decorators import advisor_required, student_required
-from accounts.models import Student, User
-from result.models import RegisteredCourse
+from accounts.models import Student, User, Advisor
+from result.models import RegisteredCourse, Result
 from course.models import Course
+from portal.models import Semester, Session
 
 
 @student_required
@@ -18,7 +19,17 @@ def student_view_result(request):
 
 @advisor_required
 def advisor_view_result(request):
-    return render(request, "result/advisor-result-page.html")
+    semesters = Semester.objects.all()
+    sessions = Session.objects.all()
+    courses=Course.objects.filter( iselective=False)
+    context={
+        'courses' : courses,
+        'semesters' : semesters,
+        'sessions' : sessions
+    }
+    return render(request, "result/advisor-result-page.html", context)
+
+
 
 @advisor_required
 def view_all_courses_semester_result(request):
@@ -41,7 +52,26 @@ def view_generated_transcript_list(request):
 
 @advisor_required
 def view_single_course_result(request):
-    return render(request, "result/advisor-single-course-result.html")
+    semesters = Semester.objects.all()
+    sessions = Session.objects.all()
+    advisor = Advisor.objects.get(advisor=request.user)
+    courses=Course.objects.filter( iselective=False)
+    context={
+        'courses' : courses,
+        'semesters' : semesters,
+        'sessions' : sessions
+    }
+    if request.method == 'GET':
+        session_id = request.GET.get('session', None)
+        semester_name = request.GET.get('semester', None)
+        course_id = request.GET.get('course', None)
+        if session_id is not None and semester_name is not None and course_id is not None:
+            selected_course_result = RegisteredCourse.objects.filter(semester__name=semester_name, session__name= session_id, course__id=course_id, student__student_class=advisor.advisor_class)
+            context["selected_course_result"] = selected_course_result
+    return render(request, "result/advisor-single-course-result.html", context)
+
+
+
 
 class pd():
     def read_excel(self):

@@ -38,9 +38,11 @@ class StudentForm(Form):
 
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from .models import User, Student
-from django.forms import Form
+from django.forms import Form, ModelForm
 from django import forms
 from portal.models import StudentClass
+
+from accounts.models import User
 
 session_list = [
     ('2022/2023', '2022/2023'),
@@ -111,4 +113,36 @@ class UserChangeForm(UserChangeForm):
 class LoginForm(forms.Form):
     username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'class': 'input', 'type':'text', 'id': 'username', 'required': True}))
     password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'input', 'id': 'password', 'required': True}))
+
+
+
+
+
+
+class UserModelForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'other_names', 'address', 'email', 'phone_number']
+
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'input rounded w-full', 'name':'firstName', 'id':'first-name'}),
+            'last_name': forms.TextInput(attrs={'class': 'input rounded w-full', 'name':'lastName', 'id':'last-name'}),
+            'other_names': forms.TextInput(attrs={'class': 'input rounded w-full', 'name':'middleName', 'id':'middle-name'}),
+            'email': forms.EmailInput(attrs={'class': 'input rounded w-full', 'name':'email', 'id':'email'}),
+            'address': forms.TextInput(attrs={'class': 'input rounded w-full', 'name':'homeAddress', 'id':'home-address'}),
+            'phone_number': forms.TextInput(attrs={'class': 'input rounded w-full', 'name':'phone', 'id':'phone'}),
+        }
+
+    """ def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance')
+        super(UserModelForm, self).__init__(*args, **kwargs)
+
+        self.fields['first_name'].widget.attrs.update({'class': 'input rounded w-full', 'name':'firstName', 'id':'first-name', 'value': instance.first_name}) """
+        
+        
+
+
+        
+
+
 

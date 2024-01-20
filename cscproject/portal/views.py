@@ -10,15 +10,15 @@ from decorators.account_decorators import advisor_required, student_required
 
 @login_required
 @advisor_required
-def view_class_list(request):
+def view_class_list(request, pk=0):
     advisor = Advisor.objects.get(advisor=request.user)
     current_class_set = advisor.advisor_class
     all_students_info = Student.objects.filter(student_class=current_class_set).order_by('student__last_name').values('student__last_name', 'registeration_number', 'student__first_name')
     context = {
-        
+        'all_students_info' : all_students_info
     }
 
-    return render(request, "portal/advisor-class-list.html")
+    return render(request, "portal/advisor-class-list.html", context)
 
 @login_required
 @advisor_required
@@ -55,31 +55,23 @@ def advisor_home_view(request):
 @student_required
 def home_view(request):
     user = request.user
-    try:
-        student = Student.objects.get(student=request.user);
-        current_semester = Semester.objects.get(iscurrentsemester=True);
-        current_session = Session.objects.get(iscurrentsession = True);
-        total_registered_semester_courses = RegisteredCourse.objects.filter(student=student)
-        current_registered_semester_courses = total_registered_semester_courses.filter(semester=current_semester, session=current_session)
-        most_recent_cgpa = Result.objects.filter(student__registeration_number=student.registeration_number).order_by('-id').first().cgpa
-        #current_registered_semester_courses = RegisteredCourse.objects.filter(student=student, semester=current_semester, session=current_session)
-        context = {
+    student = Student.objects.get(student=request.user);
+    current_semester = Semester.objects.get(iscurrentsemester=True);
+    current_session = Session.objects.get(iscurrentsession = True);
+    total_registered_semester_courses = RegisteredCourse.objects.filter(student=student)
+    current_registered_semester_courses = total_registered_semester_courses.filter(semester=current_semester, session=current_session)
+    most_recent_cgpa = Result.objects.filter(student__registeration_number=student.registeration_number).order_by('-id').first().cgpa
+    #current_registered_semester_courses = RegisteredCourse.objects.filter(student=student, semester=current_semester, session=current_session)
+    context = {
 
-            'student': student,
-            'most_recent_cgpa': most_recent_cgpa,
-            'current_session' : current_session,
-            'current_semester': current_semester,
-            'total_registered_semester_courses': total_registered_semester_courses,
-            'current_registered_semester_courses' : current_registered_semester_courses
-            }
-        return render(request, 'portal/student-home.html', context)
-    except Student.DoesNotExist:
-        pass
+        'student': student,
+        'most_recent_cgpa': most_recent_cgpa,
+        'current_session' : current_session,
+        'current_semester': current_semester,
+        'total_registered_semester_courses': total_registered_semester_courses,
+        'current_registered_semester_courses' : current_registered_semester_courses
+        }
+    return render(request, 'portal/student-home.html', context)
 
-    try: 
-        advisor = Advisor.objects.get(advisor = user)
-        return render(request, 'portal/advisor-home.html' )
-    except Advisor.DoesNotExist:
-        pass
 
-    return render(request, 'unauthorized.html')
+    
