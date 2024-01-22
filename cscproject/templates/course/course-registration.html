@@ -49,13 +49,31 @@
                                 <th class="w-20">Type</th>
                             </thead>
                             <tbody>
+                                {% for course in current_semester_courses %}
                                 <tr>
                                     <td><input type="checkbox" class="checkbox"></td>
-                                    <td class="uppercase">Course_Code</td>
-                                    <td>Course_Title</td>
-                                    <td>Units</td>
+                                    <td class="uppercase">{{course.code}}</td>
+                                    <td>{{course.title}}</td>
+                                    <td>{{course.unit}}</td>
                                     <td class="uppercase">compulsory</td>
                                 </tr>
+                                {% endfor %}
+                                <!-- <form action="/submit" method="post">
+                                    <table>
+                                        <tr>
+                                            <td><label for="name">Name:</label></td>
+                                            <td><input type="text" id="name" name="name"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="email">Email:</label></td>
+                                            <td><input type="email" id="email" name="email"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"><button type="submit">Submit</button></td>
+                                        </tr>
+                                    </table>
+                                </form> -->
+
                             </tbody>
                         </table>
                     </div>

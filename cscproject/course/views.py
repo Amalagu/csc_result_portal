@@ -3,6 +3,7 @@ from decorators.account_decorators import advisor_required, student_required
 from accounts.models import Student
 from result.models import RegisteredCourse
 from portal.models import Semester, Session
+from course.models import Course
 from .forms import CourseModelForm
 from django.http import HttpResponse
 
@@ -28,8 +29,10 @@ from django.http import HttpResponse
 @student_required
 def view_course_registeration_details(request, session, semester):
     all_current_semester_registered_courses = RegisteredCourse.objects.filter(session=session, semester=semester, student=request.user.student)
+    total_registered_units = sum( registerdcourse.course.unit for registerdcourse in all_current_semester_registered_courses)
     context={
         'all_current_semester_registered_courses' : all_current_semester_registered_courses,
+        'total_registered_units' : total_registered_units,
     }
     return render(request, 'course/course-registration-details.html', context)
 
@@ -47,6 +50,11 @@ def view_course_registerations(request):
 @student_required
 def course_registeration(request):
     current_semester = Semester.objects.get(iscurrentsemester=True)
+    current_semester_courses = Course.objects.filter(semester=current_semester, level=request.user.student.level)
+    
+    context = {
+        'current_semester_courses':current_semester_courses,
+    }
     if request.method == 'POST':
         pass
     else:
@@ -54,7 +62,7 @@ def course_registeration(request):
         #student = get_object_or_404(Student, student=request.user)
         #student = Student.objects.get(student=request.user).get_related('level')
         #taken_courses = RegisteredCourse.objects.filter(student__student=request.user, level=student.level, semester=current_semester)
-        return render(request, "course/course-registration.html")
+        return render(request, "course/course-registration.html", context )
 
 
 @student_required

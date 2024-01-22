@@ -11,6 +11,119 @@ from accounts.models import Student, User, Advisor
 from result.models import RegisteredCourse, Result
 from course.models import Course
 from portal.models import Semester, Session
+from result.api.serializers import ResultSerializer
+
+
+
+datas = [
+    {
+        "student": {
+            "student": {
+                "first_name": "firstname10",
+                "last_name": "AGIM CHIAMAKA .N"
+            }
+        },
+        "registeredcourses": [
+            {
+                "course": {
+                    "code": "CSC 502"
+                },
+                "grade": "B"
+            },
+            {
+                "course": {
+                    "code": "CSC 514"
+                },
+                "grade": "A"
+            },
+            {
+                "course": {
+                    "code": "CSC 508"
+                },
+                "grade": "F"
+            }
+        ],
+        "offeredcourses": ["CSC 502", "CSC 514", "CSC 508"]
+    },
+    {
+        "student": {
+            "student": {
+                "first_name": "firstname2",
+                "last_name": "ABDULMALIK KABIR"
+            }
+        },
+        "registeredcourses": [
+            {
+                "course": {
+                    "code": "CSC 514"
+                },
+                "grade": "E"
+            },
+            {
+                "course": {
+                    "code": "CSC 502"
+                },
+                "grade": "D"
+            }
+        ],
+        "offeredcourses": ["CSC 502", "CSC 514"]
+    },
+    {
+        "student": {
+            "student": {
+                "first_name": "firstname1",
+                "last_name": "ABARA MERCY KELECHI"
+            }
+        },
+        "registeredcourses": [
+            {
+                "course": {
+                    "code": "CSC 508"
+                },
+                "grade": "C"
+            },
+            {
+                "course": {
+                    "code": "CSC 514"
+                },
+                "grade": "B"
+            },
+            {
+                "course": {
+                    "code": "CSC 502"
+                },
+                "grade": "A"
+            }
+        ],
+        "offeredcourses": ["CSC 502", "CSC 514", "CSC 508"]
+    }
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @student_required
@@ -55,7 +168,7 @@ def view_single_course_result(request):
     semesters = Semester.objects.all()
     sessions = Session.objects.all()
     advisor = Advisor.objects.get(advisor=request.user)
-    courses=Course.objects.filter( iselective=False)
+    courses=Course.objects.filter()
     context={
         'courses' : courses,
         'semesters' : semesters,
@@ -65,7 +178,24 @@ def view_single_course_result(request):
         session_id = request.GET.get('session', None)
         semester_name = request.GET.get('semester', None)
         course_id = request.GET.get('course', None)
-        if session_id is not None and semester_name is not None and course_id is not None:
+        if session_id is not None and semester_name is not None and course_id=='all':
+            all_unique_registered_course=RegisteredCourse.objects.filter(
+                semester__name=semester_name, 
+                session__name=session_id, 
+                student__student_class=advisor.advisor_class
+                ).values(
+                    'course__code', 
+                    'course__unit',
+                    'course__id').distinct()
+            results = Result.objects.filter(semester__name=semester_name, session__name= session_id, student_class=advisor.advisor_class)
+            serializer = ResultSerializer(results, many=True)
+            context = {
+                'data' : serializer.data,
+                'all_unique_registered_course': all_unique_registered_course        
+                       }
+            #return JsonResponse(serializer.data, safe=False)
+            return render(request, "result/advisor-semester-result-sheet.html", context)
+        elif session_id is not None and semester_name is not None and course_id is not None:
             selected_course_result = RegisteredCourse.objects.filter(semester__name=semester_name, session__name= session_id, course__id=course_id, student__student_class=advisor.advisor_class)
             context["selected_course_result"] = selected_course_result
     return render(request, "result/advisor-single-course-result.html", context)
