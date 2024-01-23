@@ -49,21 +49,20 @@ class Result(models.Model):
         unique_together = ('student', 'session', 'semester')
 
     @staticmethod
-    def calculate_semester_gpa(student_id, session, semester):
+    def calculate_semester_gpa(student, session, semester):
         """static function to calculate the cgpa of a student for a particular
         semester in a session. You pass in the student's reg_number, a session object,
         and a semester object
         """
         grade_dict = {'A': 5, 'B': 4, 'C': 3, 'D': 2, 'E': 1, 'F': 0}
-        student=Student.objects.get(registeration_number=student_id)
+        #student=Student.objects.get(registeration_number=student_id)
         result = Result.objects.filter(student=student, session=session, semester=semester).first()
         if result:
             courses = RegisteredCourse.objects.filter(result=result).exclude(grade__isnull= True)
-            total_unit = sum(course.course_id.unit for course in courses)
-            total_points = sum(course.course_id.unit * grade_dict.get(course.grade, 0) for course in courses)
+            total_unit = sum(course.course.unit for course in courses)
+            total_points = sum(course.course.unit * grade_dict.get(course.grade, 0) for course in courses)
             gpa = total_points / total_unit if total_unit != 0 else 0.0
             result.gpa = gpa
-            result.save()
             return gpa
         else:
             return 0.0
@@ -71,26 +70,29 @@ class Result(models.Model):
 
 
     @staticmethod
-    def calculate_cgpa(student_id):
+    def calculate_cgpa(student):
         """ static method to calculate a student's cgpa by querying the result table
         for other instances of their results for previous semesters.
         """
-        results = Result.objects.filter(student__registeration_number=student_id).order_by('-id')
+        results = Result.objects.filter(student=student).order_by('-id')
         if not results:
         # No results available, return a default CGPA (i.e 5.0)
             return 5.0
         most_recent_result = results.first()    #GET THE MOST RECENT RESULT
-        total_points = sum(result.gpa for result in results)
+        total_points = sum(result.gpa if result.gpa is not None else 0.0 for result in results)
         total_courses = len(results)
         cgpa = total_points / total_courses if total_courses != 0 else 0.0
         most_recent_result.cgpa = cgpa      #SAVE THE CURRENT CGPA VALUE TO THE MOST RECENT RESULT
-        most_recent_result.save()
         return cgpa
     
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
+
+        self.gpa = self.calculate_semester_gpa(student=self.student, semester=self.semester, session=self.session)
+        self.cgpa = self.calculate_cgpa(self.student)
         self.student.update_cgpa()
+        super().save(*args, **kwargs)
+        
         
 
     def __str__(self):

@@ -95,35 +95,10 @@
                             <th></th>
                         </thead>
                         <tbody style="text-align: center;">
-                            <tr>
-                                <td style="text-align: left;">1</td>
-                                <td>20181112222</td>
-                                <span>
-                                    {{% for course in all_unique_registered_course %}
-                                    <td>AA</td>
-                                    {% endfor %}
-
-                                </span>
-
-                                <td>148</td>
-                                <td>38</td>
-                                <td>4.55</td>
-
-                                <td>148</td>
-                                <td>38</td>
-                                <td>4.55</td>
-
-                                <td>148</td>
-                                <td>38</td>
-                                <td>4.55</td>
-
-                                <td>PASS</td>
-                            </tr>
-                            <!-- TEST ROW -->
                             {% for studentdata in data %}
                             <tr>
                                 <td style="text-align: left;">1</td>
-                                <td>{{studentdata.student.student.last_name}}</td>
+                                <td>{{studentdata.student}}</td>
                                 <span>
                                     {% for code in all_unique_registered_course %}
                                     {% with columnkey=code.course__code %}

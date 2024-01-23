@@ -22,29 +22,38 @@
                 <h1 class="text-lg text-body-300 font-semibold">Results</h1>
                 <h1 class="text-secondary-800 font-semibold mt-5">View Results</h1>
                 <div class="flex items-center gap-2 w-full flex-wrap">
-                    <div class="select">
-                        <select name="session" id="session" title="session" class="rounded">
-                            <option value="0">Select Session</option>
-                            <option value="2018-2019">2018-2019</option>
-                        </select>
-                    </div>
-                    <!-- Add a disabled attribute to this select element if the user hasn't selected a session -->
-                    <div class="select">
-                        <select name="semester" id="semester" title="semester" class="rounded">
-                            <option value="0">Select Semester</option>
-                            <option value="1">Harmattan</option>
-                            <option value="2">Rain</option>
-                        </select>
-                    </div>
-                    <!--  -->
+                    <form action='' class="flex items-end flex-wrap gap-x-2 md:w-[34rem]" id="result-options-form"
+                        method="GET">
+                        {% csrf_token %}
+                        <div class="select">
+                            <select name="session" id="session" title="session" class="rounded">
+                                <option value="0">Select Session</option>
+                                {% for session in sessions %}
+                                <option value="{{session.name}}">{{session.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!-- Add a disabled attribute to this select element if the user hasn't selected a session -->
+                        <div class="select">
+                            <select name="semester" id="semester" title="semester" class="rounded">
 
-                    <!-- Add a disabled attribute to this button element if the user hasn't selected a semester -->
-                    <div>
-                        <button type="button"
-                            class="btn text-white bg-[var(--primary)] rounded hover:bg-[var(--primary-700)] text-sm p-[.3rem]">
-                            Search
-                        </button>
-                    </div>
+                                <option value="0">Select Semester</option>
+                                {% for semester in semesters %}
+                                <option value="{{semester.name}}">{{semester.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!--  -->
+
+                        <!-- Add a disabled attribute to this button element if the user hasn't selected a semester -->
+                        <div>
+                            <button type="submit"
+                                class="btn text-white bg-[var(--primary)] rounded hover:bg-[var(--primary-700)] text-sm p-[.3rem]">
+                                Search
+                            </button>
+
+                        </div>
+                    </form>
                     <!--  -->
                 </div>
                 <div id="view-results-container" class="flex flex-col gap-5 overflow-y-scroll">
@@ -62,17 +71,19 @@
                                 <th class="w-20">Remark</th>
                             </thead>
                             <tbody>
+                                {% for result in all_results %}
                                 <tr>
-                                    <td class="uppercase">Course_Code</td>
-                                    <td>Course_Title</td>
-                                    <td>Units</td>
-                                    <td>Test</td>
-                                    <td>Practical</td>
-                                    <td>Exam</td>
-                                    <td>Total</td>
-                                    <td class="uppercase">Grade</td>
-                                    <td class="uppercase">Remark</td>
+                                    <td class="uppercase">{{result.course.code}}</td>
+                                    <td>{{result.course.title}}</td>
+                                    <td>{{result.course.unit}}</td>
+                                    <td>{{result.testscore}}</td>
+                                    <td>{{result.labscore}}</td>
+                                    <td>{{result.examscore}}</td>
+                                    <td>{{result.totalscore}}</td>
+                                    <td class="uppercase">{{result.grade}}</td>
+                                    <td class="uppercase">{{result.remark}}</td>
                                 </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>

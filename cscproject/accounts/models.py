@@ -125,8 +125,9 @@ class Student(models.Model):
             self.save()
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
         self.update_cgpa()
+        super().save(*args, **kwargs)
+        
 
 
     def __str__(self):

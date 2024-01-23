@@ -15,94 +15,6 @@ from result.api.serializers import ResultSerializer
 
 
 
-datas = [
-    {
-        "student": {
-            "student": {
-                "first_name": "firstname10",
-                "last_name": "AGIM CHIAMAKA .N"
-            }
-        },
-        "registeredcourses": [
-            {
-                "course": {
-                    "code": "CSC 502"
-                },
-                "grade": "B"
-            },
-            {
-                "course": {
-                    "code": "CSC 514"
-                },
-                "grade": "A"
-            },
-            {
-                "course": {
-                    "code": "CSC 508"
-                },
-                "grade": "F"
-            }
-        ],
-        "offeredcourses": ["CSC 502", "CSC 514", "CSC 508"]
-    },
-    {
-        "student": {
-            "student": {
-                "first_name": "firstname2",
-                "last_name": "ABDULMALIK KABIR"
-            }
-        },
-        "registeredcourses": [
-            {
-                "course": {
-                    "code": "CSC 514"
-                },
-                "grade": "E"
-            },
-            {
-                "course": {
-                    "code": "CSC 502"
-                },
-                "grade": "D"
-            }
-        ],
-        "offeredcourses": ["CSC 502", "CSC 514"]
-    },
-    {
-        "student": {
-            "student": {
-                "first_name": "firstname1",
-                "last_name": "ABARA MERCY KELECHI"
-            }
-        },
-        "registeredcourses": [
-            {
-                "course": {
-                    "code": "CSC 508"
-                },
-                "grade": "C"
-            },
-            {
-                "course": {
-                    "code": "CSC 514"
-                },
-                "grade": "B"
-            },
-            {
-                "course": {
-                    "code": "CSC 502"
-                },
-                "grade": "A"
-            }
-        ],
-        "offeredcourses": ["CSC 502", "CSC 514", "CSC 508"]
-    }
-]
-
-
-
-
-
 
 
 
@@ -128,7 +40,23 @@ datas = [
 
 @student_required
 def student_view_result(request):
-    return render(request, 'result/student-result-page.html')
+    semesters = Semester.objects.all()
+    sessions = Session.objects.all()
+    current_session = Session.objects.filter(iscurrentsession=True).first()
+    all_results = RegisteredCourse.objects.filter(result__student=request.user.student, result__session=current_session)
+
+    context={
+        'semesters' : semesters,
+        'sessions' : sessions,
+        'all_results' : all_results
+    }
+    
+    if request.method == 'GET':
+        session = request.GET.get('session', None)
+        semester_name = request.GET.get('semester', None)
+        requested_courses = RegisteredCourse.objects.filter(result__student=request.user.student, result__session=session)
+        context['all_results'] = requested_courses
+    return render(request, 'result/student-result-page.html', context)
 
 @advisor_required
 def advisor_view_result(request):
