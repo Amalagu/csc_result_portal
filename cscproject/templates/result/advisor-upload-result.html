@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,13 +6,6 @@
     {% include 'base/advisor-head.html' %}
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Advisor - Results</title>
-    <style>
-        @media screen and (max-width: 367.5px) {
-            #search-label {
-                top: .3rem
-            }
-        }
-    </style>
 </head>
 
 <body x-data="{navIsOpen: false, open: false}">
@@ -35,15 +27,15 @@
                     <a href="{% url 'cgpa_summary' %}">CGPA Summary Result</a>
                 </div>
 
-                <div class="w-full mt-4">
-                    <form action="" class="flex items-center gap-x-2 w-full relative flex-wrap md:w-[34rem]">
-                        <label for="student-search" class="text-body-200 absolute top-3 left-1" id="search-label">
+                <div class="w-full mt-4 lg:w-[80%]">
+                    <form action="" class="flex items-center gap-2 w-full relative md:w-[32rem]">
+                        <label for="student-search" class="text-body-200 absolute top-3 left-1">
                             <span class="material-symbols-rounded">search</span>
                         </label>
                         <input type="search" name="studentSearch" id="student-search" placeholder="Search..."
-                            class="border border-[var(--primary)] outline-none h-8 pl-8 text-body-300 grow">
-                        <div class="select block grow">
-                            <select name="searchBy" id="searchBy" class="w-full">
+                            class="border border-[var(--primary)] outline-none h-8  pl-8 text-body-300 w-full">
+                        <div class="select">
+                            <select name="searchBy" id="searchBy">
                                 <option value="">Search by</option>
                                 <option value="name">Name</option>
                                 <option value="regNum">Reg. Number</option>
@@ -55,58 +47,37 @@
                         </button>
                     </form>
 
-                    <form action="{% url 'single_course_result' %}"
-                        class="flex items-end flex-wrap gap-x-2 md:w-[34rem]" id="result-options-form" method="GET">
-                        {% csrf_token %}
-                        <div class="select grow">
+                    <form action="" class="flex items-end flex-wrap gap-2 md:w-[32rem]" id="result-options-form">
+                        <div class="select flex-grow">
                             <label for="session">Session</label>
                             <select name="session" id="session" class="w-full">
                                 <option value="" class>Select session</option>
-                                {% for session in sessions %}
-                                <option value={{session.name}}>{{session.name}}</option>
-                                {% endfor %}
+                                <option value="2019-2020">2019-2020</option>
+                                <option value="2018-2019">2018-2019</option>
                             </select>
                         </div>
 
-                        <div class="select grow">
+                        <div class="select flex-grow">
                             <label for="semester">Semester</label>
                             <select name="semester" id="semester" class="w-full">
-                                <option value="">Select semester</option>
-                                {% for semester in semesters %}
-                                <option value={{semester.name}}>{{semester.name}}</option>
-                                {% endfor %}
+                                <option value="harmattan">Harmattan</option>
+                                <option value="rain">Rain</option>
                             </select>
                         </div>
 
-                        <div class="select grow">
+                        <div class="select flex-grow">
                             <label for="course">Course</label>
                             <select name="course" id="course" class="w-full">
-                                <option value="">Select course</option>
-                                <option value="all">All courses</option>
-                                {% for course in courses %}
-                                <option value={{course.id}}>{{course.code}}</option>
-                                {% endfor %}
+                                <option value="1">MTH 101</option>
                             </select>
                         </div>
 
                         <button type="submit"
-                            class="btn-sm text-white bg-[var(--primary)] hover:bg-[var(--primary-700)] transition rounded h-8"
-                            disabled>
+                            class="btn-sm text-white bg-[var(--primary)] hover:bg-[var(--primary-700)] transition rounded h-8">
                             View Result
                         </button>
                     </form>
                 </div>
-            </div>
-
-            <div
-                class="fixed bg-blue-100 w-80 h-60 left-[50%] top-[50%] -translate-x-[50%] -translate-y-[10%] text-body-800 p-2">
-                <p class="text-center">For development only!!!</p>
-                Click <a href="{% url 'all_semester_result' %}" class="text-danger font-semibold">here</a> to see the
-                page when the user selects "All Courses" <br>
-                Click <a href="{% url 'single_course_result'  %}" class="text-danger font-semibold">here</a> to see the
-                page when the
-                user selects a single course. <br>
-                Navigate to the appropriate page and display the appropriate results when the submit button is clicked.
             </div>
 
             <div x-show="open" x-on:click.outside="open = false" x-transition id="advisor-details"
@@ -166,8 +137,5 @@
 </script>
 {% include 'base/advisor-footer.html' %}
 <script type="module" src="{% static 'js/advisor-results.js' %}"></script>
-<!-- <script type="module" src="{% static 'js/result-options-form.js' %}"></script> -->
-
-
 
 </html>

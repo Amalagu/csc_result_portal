@@ -37,7 +37,7 @@ class ResultSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Result
-        fields = ['student', 'registeredcourses', 'offeredcourses']
+        fields = ['student', 'registeredcourses', 'offeredcourses', 'tnu', 'tgp', 'cummulative_tgp', 'cummulative_tnu', 'gpa', 'cgpa']
 
     def get_registeredcourses(self, obj):
         registeredcourses = obj.registeredcourse_set.all()

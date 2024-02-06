@@ -47,8 +47,16 @@ def testview(request):
 @student_required
 def view_student_profile(request):
     student = Student.objects.get(student=request.user);
+    if request.method == 'POST':
+        form = UserModelForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('view_profile')
+    else:
+        form = UserModelForm(instance=request.user)
     context = {
-        "student":student
+        "student":student,
+        'form': form
     }
     return render(request, 'accounts/profile.html', context)
 

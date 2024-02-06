@@ -40,8 +40,12 @@ class Result(models.Model):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     #course = models.ForeignKey(RegisteredCourse, on_delete=models.CASCADE)
-    gpa = models.FloatField(null=True, blank=True)
-    cgpa = models.FloatField(null=True, blank=True)
+    tgp = models.IntegerField(null=True, blank=True)
+    tnu = models.IntegerField(null=True, blank=True)
+    gpa = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=2)
+    cummulative_tgp = models.IntegerField(null=True, blank=True)
+    cummulative_tnu = models.IntegerField(null=True, blank=True)
+    cgpa = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=2)
     level = models.CharField(max_length=25, choices=level_list, blank=True, null=True)
     student_class = models.ForeignKey(StudentClass, on_delete=models.SET_NULL, blank=True, null=True)
 
@@ -59,13 +63,15 @@ class Result(models.Model):
         result = Result.objects.filter(student=student, session=session, semester=semester).first()
         if result:
             courses = RegisteredCourse.objects.filter(result=result).exclude(grade__isnull= True)
-            total_unit = sum(course.course.unit for course in courses)
+            total_unit = sum(course.course.unit for course in courses if course.grade)
             total_points = sum(course.course.unit * grade_dict.get(course.grade, 0) for course in courses)
             gpa = total_points / total_unit if total_unit != 0 else 0.0
+            result.tgp = total_points
+            result.tnu = total_unit
             result.gpa = gpa
-            return gpa
+            return gpa, total_unit, total_points
         else:
-            return 0.0
+            return 0.0, 0, 0
         
 
 
@@ -77,21 +83,23 @@ class Result(models.Model):
         results = Result.objects.filter(student=student).order_by('-id')
         if not results:
         # No results available, return a default CGPA (i.e 5.0)
-            return 5.0
+            return 5.0, 0, 0
         most_recent_result = results.first()    #GET THE MOST RECENT RESULT
-        total_points = sum(result.gpa if result.gpa is not None else 0.0 for result in results)
-        total_courses = len(results)
-        cgpa = total_points / total_courses if total_courses != 0 else 0.0
+        cumm_points = sum(result.tgp if result.tgp is not None else 0 for result in results)
+        cumm_units = sum(result.tnu if result.tnu is not None else 0 for result in results)
+        cgpa = cumm_points / cumm_units if cumm_units != 0 else 0.0
         most_recent_result.cgpa = cgpa      #SAVE THE CURRENT CGPA VALUE TO THE MOST RECENT RESULT
-        return cgpa
+        return cgpa,  cumm_units, cumm_points
     
 
     def save(self, *args, **kwargs):
 
-        self.gpa = self.calculate_semester_gpa(student=self.student, semester=self.semester, session=self.session)
-        self.cgpa = self.calculate_cgpa(self.student)
+        self.gpa, self.tnu, self.tgp = self.calculate_semester_gpa(student=self.student, semester=self.semester, session=self.session)
+        super().save(*args, **kwargs)  # Save the instance first
+        self.refresh_from_db()
+        self.cgpa, self.cummulative_tnu, self.cummulative_tgp = self.calculate_cgpa(self.student)
+        super().save(*args, **kwargs)  # Save the instance first
         self.student.update_cgpa()
-        super().save(*args, **kwargs)
         
         
 
@@ -122,15 +130,20 @@ class RegisteredCourse(models.Model):
     
     def save(self, *args, **kwargs):
         #Automatically create or update the related Result when saving ReigisteredCourse
-        if not self.result:
-            result, created = Result.objects.get_or_create(
-                student = self.student_id,
-                session = self.session,
-                semester = self.semester
-            )
-            self.result = result
+        
+        result, created = Result.objects.get_or_create(
+            student = self.student_id,
+            session = self.session,
+            semester = self.semester
+        )
+        self.result = result
+        if created:
             result.save()
-        super().save(*args, **kwargs)
+            super().save(*args, **kwargs)
+        else:
+            super().save(*args, **kwargs)
+            result.save()
+
 
 
 

@@ -8,7 +8,8 @@ from .views import (
     view_cgpa_summary,
     view_single_course_result,
     view_generated_transcript,
-    view_generated_transcript_list
+    view_generated_transcript_list,
+    view_upload_result_page
     )
 from .api.views import ResultDataAPIView
 
@@ -24,6 +25,8 @@ urlpatterns = [
     path('advisor/api', ResultDataAPIView.as_view()),
 
     path('', parsetoresultmodel),
+    #path('upload/', view_upload_result_page, name='uploadresult')
+    
     path('upload/', upload_file, name='uploadresult'),
 
 ]

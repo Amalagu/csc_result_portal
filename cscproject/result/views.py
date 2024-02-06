@@ -154,7 +154,9 @@ def parsetoresultmodel(request):
 
 
 
-
+@advisor_required
+def view_upload_result_page(request):
+    return render(request, 'result/advisor-upload-result.html')
 
 
 
