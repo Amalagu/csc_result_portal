@@ -41,31 +41,38 @@
                     </div>
 
                     <div id="student-table-container" class="overflow-scroll">
-                        <table class="table w-[100%] lg:w-[80%] whitespace-nowrap">
-                            <thead>
-                                <th class="w-10">Select</th>
-                                <th class="w-20">Course Code</th>
-                                <th>Course Title</th>
-                                <th class="w-20">Units</th>
-                                <th class="w-20">Type</th>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="checkbox" class="checkbox"></td>
-                                    <td class="uppercase">Course_Code</td>
-                                    <td>Course_Title</td>
-                                    <td>Units</td>
-                                    <td class="uppercase">compulsory</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <table class="table w-[100%] lg:w-[80%] whitespace-nowrap">
+                                <thead>
+                                    <th class="w-10">Select</th>
+                                    <th class="w-20">Course Code</th>
+                                    <th>Course Title</th>
+                                    <th class="w-20">Units</th>
+                                    <th class="w-20">Type</th>
+                                </thead>
+                                <tbody>
+                                    {% for course in unregistered_courses %}
+                                    <tr>
+                                        <td><input type="checkbox" class="checkbox" name="selected_courses"
+                                                value="{{ course.code }}"></td>
+                                        <td class="uppercase">{{course.code}}</td>
+                                        <td>{{course.title}}</td>
+                                        <td>{{course.unit}}</td>
+                                        <td class="uppercase">compulsory</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <div class="flex justify-end w-[100%] lg:w-[80%]">
+                                <button type="submit"
+                                    class="btn bg-[var(--primary)] text-white hover:bg-[var(--primary-700)] rounded text-sm">Borrow
+                                    courses</button>
+                            </div>
+                        </form>
                     </div>
 
-                    <div class="flex justify-end w-[100%] lg:w-[80%]">
-                        <button type="button"
-                            class="btn bg-[var(--primary)] text-white hover:bg-[var(--primary-700)] rounded text-sm">Borrow
-                            courses</button>
-                    </div>
+
                 </div>
             </div>
 

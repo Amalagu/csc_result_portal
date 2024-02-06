@@ -40,25 +40,33 @@
                     </div>
 
                     <div id="student-table-container" class="overflow-scroll">
-                        <table class="table w-[100%] lg:w-[80%] whitespace-nowrap">
-                            <thead>
-                                <th class="w-10">Select</th>
-                                <th class="w-20">Course Code</th>
-                                <th>Course Title</th>
-                                <th class="w-20">Units</th>
-                                <th class="w-20">Type</th>
-                            </thead>
-                            <tbody>
-                                {% for course in current_semester_courses %}
-                                <tr>
-                                    <td><input type="checkbox" class="checkbox"></td>
-                                    <td class="uppercase">{{course.code}}</td>
-                                    <td>{{course.title}}</td>
-                                    <td>{{course.unit}}</td>
-                                    <td class="uppercase">compulsory</td>
-                                </tr>
-                                {% endfor %}
-                                <!-- <form action="/submit" method="post">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <table class="table w-[100%] lg:w-[80%] whitespace-nowrap">
+                                <thead>
+                                    <th class="w-10">Select</th>
+                                    <th class="w-20">Course Code</th>
+                                    <th>Course Title</th>
+                                    <th class="w-20">Units</th>
+                                    <th class="w-20">Type</th>
+                                </thead>
+                                <tbody>
+                                    {% for course in merged_courses %}
+                                    <tr>
+                                        {% if course.code in registered_coursecodes_list %}
+                                        <td><input type="checkbox" class="checkbox" name="selected_courses"
+                                                value="{{ course.code }}" checked></td>
+                                        {% else %}
+                                        <td><input type="checkbox" class="checkbox" name="selected_courses"
+                                                value="{{ course.code }}"></td>
+                                        {% endif %}
+                                        <td class="uppercase">{{course.code}}</td>
+                                        <td>{{course.title}}</td>
+                                        <td>{{course.unit}}</td>
+                                        <td class="uppercase">compulsory</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <!-- <form action="/submit" method="post">
                                     <table>
                                         <tr>
                                             <td><label for="name">Name:</label></td>
@@ -74,15 +82,21 @@
                                     </table>
                                 </form> -->
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                            <div class="flex justify-end w-[100%] lg:w-[80%]">
+                                <button type="submit"
+                                    class="btn bg-[var(--primary)] text-white hover:bg-[var(--primary-700)] rounded">Register
+                                    courses</button>
+                            </div>
+                        </form>
                     </div>
 
-                    <div class="flex justify-end w-[100%] lg:w-[80%]">
+                    <!-- <div class="flex justify-end w-[100%] lg:w-[80%]">
                         <button type="button"
                             class="btn bg-[var(--primary)] text-white hover:bg-[var(--primary-700)] rounded">Register
                             courses</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -90,7 +104,7 @@
                 class="fixed top-12 right-0 bg-white flex flex-col gap-2 overflow-y-scroll w-80 p-2 shadow-lg">
 
                 <div class="rounded border border-slate-400 flex flex-col gap-4 items-center px-4 py-16">
-                    <img src="../../assets/images/user.jpg" alt="user_img" class="w-32 h-32 object-cover rounded-full">
+                    <img src="{% static 'img/user.jpg' %}" alt="user_img" class="w-32 h-32 object-cover rounded-full">
 
                     <div class="flex flex-col items-center gap-1 text-center">
                         <h1 class="text-body-800 text-2xl">
@@ -136,7 +150,7 @@
                             Register Courses
                         </button>
                     </a>
-                    <img src="../../assets/images/frame.svg" alt="frame" class="absolute bottom-0 right-0 ">
+                    <img src="{% static 'img/frame.svg' %}" alt="frame" class="absolute bottom-0 right-0 ">
                 </div>
             </div>
         </section>

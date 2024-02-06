@@ -6,6 +6,7 @@ const submitBtn = document.querySelector('#result-options-form button[type="subm
 
 
 function adjustFields() {
+
     if (session.value ==="" || semester.value ==="" || course.value ==="") {
         submitBtn.disabled = true
     } else {
@@ -19,16 +20,9 @@ function adjustFields() {
     if (semester.value !=="") {
         course.disabled = false
     } else {
-        course.disabled = true
+        course.disabled = false
     }
 }
-
-
-
-
-
-
-
 
 function viewResults() {
    console.log('View Results')

@@ -552,7 +552,7 @@ grid-template-columns: repeat(3, 1fr);}
 }
 
 /* Form elements */
-.input {
+/* .input {
     height: 55px;
     border: 1px solid  var(--body-200);
     display: block;
@@ -560,4 +560,101 @@ grid-template-columns: repeat(3, 1fr);}
     padding: 1rem;
     font-size: 1.25rem;
     color: var(--body-400);
+}
+ */
+.input {
+    height: 2.5rem;
+    border: 1px solid var(--body-200);
+    display: block;
+    padding: .5rem;
+    font-size: 1rem;
+    color: var(--body-400);
+    outline: none;
+}
+
+/* Selection and File input element styling */
+.select,
+.file-input {
+    display: inline-block;
+    margin: .5rem 0;
+}
+
+.select>select,
+.file-input>input {
+    display: block;
+    border: 1px solid var(--primary);
+    padding: .4rem .75rem;
+    font-size: .85rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    color: var(--body);
+    background-color: var(--white);
+    outline: none;
+}
+
+
+.select>select:disabled,
+.file-input>select:disabled {
+    border: 0;
+    outline: none;
+    background-color: var(--body-50);
+    color: var(--body-200);
+    cursor: not-allowed;
+}
+
+.select>select:disabled:hover,
+.file-input>select:disabled:hover {
+    background-color: var(--body-50);
+    color: var(--body-200);
+    cursor: not-allowed;
+}
+
+.select>label,
+.file-input>label {
+    display: block;
+    color: var(--secondary-800);
+    font-weight: 600;
+    font-size: .85rem;
+    margin: .2rem 0;
+}
+
+/* Checkbox stylings */
+.checkbox {
+    cursor: pointer;
+    appearance: none;
+    width: 20px;
+    aspect-ratio: 1/1;
+    background: url(../assets/checkboxes/checkbox-unchecked.svg);
+    background-repeat: no-repeat;
+}
+
+.checkbox:checked {
+    background: url(../assets/checkboxes/checkbox-checked.svg);
+    background-repeat: no-repeat;
+}
+
+.checkbox:disabled {
+    background: url(../assets/checkboxes/checkbox-disabled.svg);
+    background-repeat: no-repeat;
+    cursor: not-allowed;
+}
+
+.checkbox-sm {
+    cursor: pointer;
+    appearance: none;
+    width: 15px;
+    aspect-ratio: 1/1;
+    background: url(../assets/checkboxes/checkbox-small-unchecked.svg);
+    background-repeat: no-repeat;
+}
+
+.checkbox-sm:checked {
+    background: url(../assets/checkboxes/checkbox-small-checked.svg);
+    background-repeat: no-repeat;
+}
+
+.checkbox-sm:disabled {
+    background: url(../assets/checkboxes/checkbox-small-disabled.svg);
+    background-repeat: no-repeat;
+    cursor: not-allowed;
 }
