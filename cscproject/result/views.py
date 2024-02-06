@@ -17,27 +17,6 @@ from result.api.serializers import ResultSerializer
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @student_required
 def student_view_result(request):
     semesters = Semester.objects.all()
