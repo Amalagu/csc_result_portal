@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
-
+from django.contrib.auth.decorators import login_required
 from decorators.account_decorators import student_required, advisor_required
 from .forms import LoginForm, UserModelForm
 from .models import Student, Advisor
@@ -39,11 +39,12 @@ def dashboard_view(request):
 """
 
 
-
+@login_required
 def testview(request):
     return render(request, "course-registration.html")
 
 
+@login_required
 @student_required
 def view_student_profile(request):
     student = Student.objects.get(student=request.user);
@@ -62,7 +63,7 @@ def view_student_profile(request):
 
 
 
-
+@login_required
 @advisor_required
 def view_advisor_profile(request):
     advisor = Advisor.objects.get(advisor=request.user)

@@ -6,17 +6,18 @@ from django.http import JsonResponse
 import pandas as pd
 
 from .forms import UploadFileForm
+from django.contrib.auth.decorators import login_required
 from decorators.account_decorators import advisor_required, student_required
 from accounts.models import Student, User, Advisor
 from result.models import RegisteredCourse, Result
 from course.models import Course
-from portal.models import Semester, Session
+from portal.models import Semester, Session, StudentClass
 from result.api.serializers import ResultSerializer
 
 
 
 
-
+@login_required
 @student_required
 def student_view_result(request):
     semesters = Semester.objects.all()
@@ -37,6 +38,8 @@ def student_view_result(request):
         context['all_results'] = requested_courses
     return render(request, 'result/student-result-page.html', context)
 
+
+@login_required
 @advisor_required
 def advisor_view_result(request):
     semesters = Semester.objects.all()
@@ -50,26 +53,34 @@ def advisor_view_result(request):
     return render(request, "result/advisor-result-page.html", context)
 
 
-
+@login_required
 @advisor_required
 def view_all_courses_semester_result(request):
     return render(request, "result/advisor-semester-result-sheet.html")
 
 
+
+@login_required
 @advisor_required
 def view_cgpa_summary(request):
     return render(request, "result/advisor-cgpa-summary.html")
 
+
+@login_required
 @advisor_required
 def view_generated_transcript(request, pk=0):
     return render(request, "result/advisor-generated-transcript.html")
 
 
+
+@login_required
 @advisor_required
 def view_generated_transcript_list(request):
     return render(request, "result/advisor-list-generated-transcript.html")
 
 
+
+@login_required
 @advisor_required
 def view_single_course_result(request):
     semesters = Semester.objects.all()
@@ -155,7 +166,10 @@ def upload_file(request):
                 else:
                     df = pd.read_excel(file)
                 if request.POST['type'] == 'Class list':
+                    student_class = StudentClass.objects.get(class_set=request.POST['class_set'])
                     # Transform and save data
+                    #advisor_class= Advisor.objects.get(advisor=request.user).values_list('advisor_class')
+                    
                     user_list = []
                     student_list = []
 
@@ -165,7 +179,7 @@ def upload_file(request):
                         user.set_password('workings2020?')
                         user_list.append(user)
 
-                        student = Student(student=user, registeration_number=row['registeration_number'])
+                        student = Student(student=user, registeration_number=row['registeration_number'], student_class=student_class, level=student_class.current_level)
                         student_list.append(student)
 
                     User.objects.bulk_create(user_list)

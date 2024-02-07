@@ -14,9 +14,11 @@ def view_class_list(request, pk=0):
     advisor = Advisor.objects.get(advisor=request.user)
     current_class_set = advisor.advisor_class
     all_students_info = Student.objects.filter(student_class=current_class_set).order_by('student__last_name').values('student__last_name', 'registeration_number', 'student__first_name')
+    #all_students_info = all_students_info[:10]
     context = {
         'all_students_info' : all_students_info
     }
+    print(all_students_info)
 
     return render(request, "portal/advisor-class-list.html", context)
 

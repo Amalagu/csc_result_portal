@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from decorators.account_decorators import advisor_required, student_required
 from accounts.models import Student
 from result.models import RegisteredCourse
@@ -27,6 +28,8 @@ from django.db.models import Q
     return render(request, 'course/course-registration-details.html') """
 
 
+
+@login_required
 @student_required
 def view_course_registeration_details(request, session, semester):
     all_current_semester_registered_courses = RegisteredCourse.objects.filter(session=session, semester=semester, student=request.user.student)
@@ -38,6 +41,7 @@ def view_course_registeration_details(request, session, semester):
     return render(request, 'course/course-registration-details.html', context)
 
 
+@login_required
 @student_required
 def view_course_registerations(request):
     registered_semesters = RegisteredCourse.objects.values('session', 'semester', 'student__level').distinct()
@@ -48,6 +52,7 @@ def view_course_registerations(request):
     return render(request, 'course/courses.html', context)
 
 
+@login_required
 @student_required
 def course_registeration(request):
     current_semester = Semester.objects.get(iscurrentsemester=True)
@@ -93,6 +98,7 @@ def course_registeration(request):
     return render(request, "course/course-registration.html", context )
 
 
+@login_required
 @student_required
 def course_registeration_borrow_course(request):
     current_semester = Semester.objects.get(iscurrentsemester=True)
@@ -126,7 +132,7 @@ def course_registeration_borrow_course(request):
 def course_registeration_details(request):
     return render(request, 'course/course-registration-details.html') """
 
-
+@login_required
 def add_course(request):
     form = CourseModelForm()
     if request.method == 'POST':

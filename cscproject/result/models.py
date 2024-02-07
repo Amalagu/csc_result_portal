@@ -158,7 +158,7 @@ class UploadedFile(models.Model):
     session = models.ForeignKey(Session, null=True, blank=True, on_delete=models.SET_NULL)
     semester = models.ForeignKey(Semester, null=True, blank=True, on_delete=models.SET_NULL)
     class_set = models.ForeignKey(StudentClass, null=True, blank=True, on_delete=models.SET_NULL)
-
+  
 
 
 
