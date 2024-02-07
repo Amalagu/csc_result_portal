@@ -34,6 +34,20 @@ class UserAdmin(UserAdmin):
     ordering = ("email",)
 
 
+
+class StudentAdmin(admin.ModelAdmin):
+    list_display = ('get_full_name', 'registeration_number',)  # Add other fields you want to display
+    ordering = ['student__last_name']
+    
+    def get_full_name(self, obj):
+        return f"{obj.student.last_name}, {obj.student.first_name}"  # Adjust as needed
+
+    get_full_name.short_description = 'Full Name'  # Custom column header
+
+
+
+
+
 admin.site.register(User, UserAdmin)
-admin.site.register(Student)
+admin.site.register(Student, StudentAdmin)
 admin.site.register(Advisor)

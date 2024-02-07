@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from decorators.account_decorators import advisor_required, student_required
 from accounts.models import Student
-from result.models import RegisteredCourse
+from result.models import RegisteredCourse, Result
 from portal.models import Semester, Session
 from course.models import Course
 from .forms import CourseModelForm
@@ -58,13 +58,18 @@ def course_registeration(request):
     current_semester = Semester.objects.get(iscurrentsemester=True)
     current_session = Session.objects.get(iscurrentsession=True)
     student= Student.objects.get(student=request.user)
+    """ student_semester_result = Result.objects.get_or_create(
+        student=student,
+        semester=current_semester,
+        session=current_session,
+        student_class = student.student_class
+    ) """
     registered_courses_instances = RegisteredCourse.objects.filter(student=student, session=current_session, semester=current_semester)
     registered_courses = registered_courses_instances.values_list('course__code', flat=True)
     """SINCE THE REGISTERED COURSES MIGHT CONTAIN BORROWED COURSES FROM OTHER LEVELS THAT IS NOT
     CAPTURED IN current semester courses WE NEED TO MERGE BOTH QUERYSET. BUT WE NEED BOTH
     QUERYSET TO CONTAIN SAME TYPE OF INSTANCES - WHICH IS 'COURSE' """
     #registered_course_instances = registered_courses.values_list('course', flat=True) #GET THE QUERYSET OF COURSES
-    print('THIS IS REGISTERED COURSE', registered_courses)
     merged_courses = Course.objects.filter(semester=current_semester, level=request.user.student.level) | Course.objects.filter(registeredcourse__in=registered_courses_instances) #MERGE BOTH OF THEM
     merged_courses = merged_courses.distinct()
     registered_coursecodes_list = list(registered_courses)
@@ -79,6 +84,12 @@ def course_registeration(request):
         new_registerations = []
         for coursecode in newly_selected_courses:
             courseobject = Course.objects.filter(code=coursecode).first()
+            """ new_course = RegisteredCourse(
+                student=student,
+                course=courseobject, 
+                semester=current_semester, 
+                session=current_session
+            ).save() """
             new_course, created = RegisteredCourse.objects.get_or_create(
                 student=student,
                 course=courseobject, 

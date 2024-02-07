@@ -91,15 +91,17 @@ class Result(models.Model):
         most_recent_result.cgpa = cgpa      #SAVE THE CURRENT CGPA VALUE TO THE MOST RECENT RESULT
         return cgpa,  cumm_units, cumm_points
     
-
+    
     def save(self, *args, **kwargs):
-
-        self.gpa, self.tnu, self.tgp = self.calculate_semester_gpa(student=self.student, semester=self.semester, session=self.session)
-        super().save(*args, **kwargs)  # Save the instance first
-        self.refresh_from_db()
-        self.cgpa, self.cummulative_tnu, self.cummulative_tgp = self.calculate_cgpa(self.student)
-        super().save(*args, **kwargs)  # Save the instance first
-        self.student.update_cgpa()
+        if self.pk:
+            self.gpa, self.tnu, self.tgp = self.calculate_semester_gpa(student=self.student, semester=self.semester, session=self.session)
+            super().save(*args, **kwargs)  # Save the instance first
+            self.refresh_from_db()
+            self.cgpa, self.cummulative_tnu, self.cummulative_tgp = self.calculate_cgpa(self.student)
+            super().save(*args, **kwargs)  # Save the instance first
+            self.student.update_cgpa()
+        else:
+            super().save(*args, **kwargs)
         
         
 
@@ -132,9 +134,11 @@ class RegisteredCourse(models.Model):
         #Automatically create or update the related Result when saving ReigisteredCourse
         
         result, created = Result.objects.get_or_create(
-            student = self.student_id,
+            student = self.student,
             session = self.session,
-            semester = self.semester
+            semester = self.semester,
+            student_class = self.student.student_class,
+            level=self.student.level
         )
         self.result = result
         if created:

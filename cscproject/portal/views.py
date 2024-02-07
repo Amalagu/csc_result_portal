@@ -62,7 +62,11 @@ def home_view(request):
     current_session = Session.objects.get(iscurrentsession = True);
     total_registered_semester_courses = RegisteredCourse.objects.filter(student=student)
     current_registered_semester_courses = total_registered_semester_courses.filter(semester=current_semester, session=current_session)
-    most_recent_cgpa = Result.objects.filter(student__registeration_number=student.registeration_number).order_by('-id').first().cgpa
+    most_recent_cgpa = Result.objects.filter(student__registeration_number=student.registeration_number).order_by('-id').first()
+    if most_recent_cgpa:
+        most_recent_cgpa = most_recent_cgpa.cgpa
+    else:
+        most_recent_cgpa = 0.0
     #current_registered_semester_courses = RegisteredCourse.objects.filter(student=student, semester=current_semester, session=current_session)
     context = {
 
