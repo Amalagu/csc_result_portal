@@ -58,12 +58,6 @@ def course_registeration(request):
     current_semester = Semester.objects.get(iscurrentsemester=True)
     current_session = Session.objects.get(iscurrentsession=True)
     student= Student.objects.get(student=request.user)
-    """ student_semester_result = Result.objects.get_or_create(
-        student=student,
-        semester=current_semester,
-        session=current_session,
-        student_class = student.student_class
-    ) """
     registered_courses_instances = RegisteredCourse.objects.filter(student=student, session=current_session, semester=current_semester)
     registered_courses = registered_courses_instances.values_list('course__code', flat=True)
     """SINCE THE REGISTERED COURSES MIGHT CONTAIN BORROWED COURSES FROM OTHER LEVELS THAT IS NOT
@@ -84,12 +78,6 @@ def course_registeration(request):
         new_registerations = []
         for coursecode in newly_selected_courses:
             courseobject = Course.objects.filter(code=coursecode).first()
-            """ new_course = RegisteredCourse(
-                student=student,
-                course=courseobject, 
-                semester=current_semester, 
-                session=current_session
-            ).save() """
             new_course, created = RegisteredCourse.objects.get_or_create(
                 student=student,
                 course=courseobject, 

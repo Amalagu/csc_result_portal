@@ -23,12 +23,15 @@ level_list = (
 
 
 class Course(models.Model):
-    code = models.CharField(max_length=7, unique=True, blank=False, null=False)
+    code = models.CharField(max_length=7, unique=False, blank=False, null=False)
     title = models.CharField(max_length=140, blank=False, null=False)
     unit = models.IntegerField(choices=unit_list)
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     iselective = models.BooleanField()
     level = models.CharField(max_length=25, choices=level_list, null=True)
+
+    class Meta:
+        unique_together = ('code', 'title')
 
     def __str__(self):
         return self.code

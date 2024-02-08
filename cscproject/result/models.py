@@ -99,7 +99,8 @@ class Result(models.Model):
             self.refresh_from_db()
             self.cgpa, self.cummulative_tnu, self.cummulative_tgp = self.calculate_cgpa(self.student)
             super().save(*args, **kwargs)  # Save the instance first
-            self.student.update_cgpa()
+            #self.student.update_cgpa()
+            self.student.update_cgpa(self.cgpa)
         else:
             super().save(*args, **kwargs)
         
@@ -138,10 +139,10 @@ class RegisteredCourse(models.Model):
             session = self.session,
             semester = self.semester,
             student_class = self.student.student_class,
-            level=self.student.level
         )
         self.result = result
         if created:
+            result.level=self.student.level
             result.save()
             super().save(*args, **kwargs)
         else:

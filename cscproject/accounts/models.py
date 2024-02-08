@@ -108,14 +108,17 @@ class Student(models.Model):
     registeration_number = models.CharField(max_length=11, null=False, blank=False, primary_key=True, unique=True)
     level = models.CharField(max_length=25, choices=level_list, null=True)
 
-    cgpa = models.FloatField(null=True, blank=True)
+    cgpa = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=2)
 
-    def update_cgpa(self):
-        from result.models import Result
+    def update_cgpa(self, cgpa):
+        self.cgpa = cgpa
+        self.save()
+        """ from result.models import Result
         results = Result.objects.filter(student=self)
         if results.exists():
-            total_gpa = sum(result.cgpa for result in results if result.cgpa is not None)
-            new_cgpa = total_gpa / results.count()
+            cumm_points = sum(result.tgp if result.tgp is not None else 0 for result in results)
+            cumm_units = sum(result.tnu if result.tnu is not None else 0 for result in results)
+            new_cgpa = cumm_points / cumm_units if cumm_units != 0 else 0.0
         else:
             new_cgpa = None
 
@@ -126,7 +129,7 @@ class Student(models.Model):
 
     def save(self, *args, **kwargs):
         self.update_cgpa()
-        super().save(*args, **kwargs)
+        super().save(*args, **kwargs) """
         
 
 
