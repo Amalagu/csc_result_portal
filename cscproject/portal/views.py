@@ -80,4 +80,4 @@ def home_view(request):
     return render(request, 'portal/student-home.html', context)
 
 
-    
+
