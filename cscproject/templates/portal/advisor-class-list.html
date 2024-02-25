@@ -1,0 +1,234 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'base/advisor-head.html' %}
+    <title>Advisor - Class</title>
+</head>
+
+<body x-data="{navIsOpen: false, open: false, detailsOpen: false}">
+    <div id="overlay"></div>
+
+    <main class="xl:flex">
+        {% include 'base/advisor-sidebar.html' %}
+
+        <section class="grow">
+            {% include 'base/advisor-header.html' %}
+
+            <!-- Display this part if there are registered courses -->
+            <div id="app" class="mt-12 p-2 overflow-y-scroll relative
+            lg:grid lg:grid-cols-4 lg:gap-2
+            xl:mt-0">
+                <!-- Additional styles in student.css -->
+                <div class="w-full lg:col-span-1">
+                    <div class="w-[100%] flex items-center justify-between">
+                        <h1 class="text-lg text-body-300 font-semibold">Students</h1>
+                        <button type="button"
+                            class="btn-sm bg-[var(--primary)] rounded text-white hover:bg-[var(--primary-700)] transition text-sm">
+                            Print Class List
+                        </button>
+                    </div>
+
+                    <div id="class-list-container"
+                        class="border border-slate-300 rounded px-3 py-3 overflow-y-scroll mt-4 grid grid-rows-7 lg:grid-rows-6 lg:gap-2">
+
+                        <form action="" id="student-search-form"
+                            class="row-span-1 flex items-center gap-1 bg-white lg:flex-col lg:items-start lg:row-span-1">
+                            <div class="select">
+                                <select name="searchOption" id="select" title="select search criteria"
+                                    class="rounded lg:h-8 xl:w-full">
+                                    <option value="">Search by...</option>
+                                    <option value="name">Name</option>
+                                    <option value="regNum">Reg. Number</option>
+                                </select>
+                            </div>
+
+                            <div
+                                class="flex items-center rounded border border-[var(--primary)] w-full md:w-auto lg:w-full">
+                                <input type="search" name="searchStudent" id="student-search"
+                                    class="rounded-l h-[1.9rem] px-2 outline-none text-base text-body-500 w-[80%]">
+                                <button type="submit"
+                                    class="w-[20%] bg-[var(--primary)] text-white text-sm font-semibold h-[1.9rem] rounded-tr rounded-br hover:bg-[var(--primary-700)] transition grid center">
+                                    <span class="material-symbols-rounded">search</span>
+                                </button>
+                            </div>
+                        </form>
+
+
+                        <ul
+                            class="row-span-6 mt-4 border-b border-b-[var(--black-100)] overflow-y-scroll lg:row-span-5">
+                            {% for student in all_students_info %}
+                            <li @click="detailsOpen = true" class="flex items-center gap-3 p-2 border-t border-t-[var(--black-100)] cursor-pointer transition hover:rounded hover:bg-[var(--primary-50)]
+                            lg:grid lg:grid-cols-4 lg:py-1">
+                                <div class="shrink-0 grid center
+                                lg:col-span-1">
+                                    <img src="../../assets/images/user.jpg" alt="student_img"
+                                        class="w-10 h-10 object-cover rounded-full">
+                                </div>
+                                <div class="list-div w-full 
+                                lg:col-span-3">
+                                    <h1
+                                        class="font-semibold text-body-300 text-base overflow-hidden whitespace-nowrap text-ellipsis lg:text-[.9rem]">
+                                        {{student.student__last_name}} {{student.student__first_name}}
+                                    </h1>
+                                    <p class="text-sm text-body-300 lg:text-[0.8rem]">
+                                        {{student.registeration_number}}
+                                    </p>
+                                    <div class="flex text-xs text-body-300">
+                                        <p class="pr-2 border-r border-r-[var(--black-100)]">
+                                            <span class="font-semibold">500</span> Level
+                                        </p>
+                                        <p class="pl-2 border-l border-l-[var(--black-100)] uppercase">
+                                            <span class="font-semibold">4.55</span> CGPA
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div x-show="detailsOpen" id="full-student-details" class="fixed top-12 left-[50%] -translate-x-[50%] w-[100dvw] h-[100dvh] pb-16 overflow-y-scroll border border-slate-300 bg-white
+                lg:relative lg:col-span-3 lg:w-auto lg:rounded lg:pb-4 lg:top-0 mt-[.5rem] lg:h-[unset]">
+                    <div class="flex gap-4 items-center p-4 bg-primary-50 rounded-t h-36 cursor-context-menu relative">
+                        <span @click="detailsOpen = false"
+                            class="material-symbols-rounded grid center overflow-hidden w-5 h-5 rounded text-red-500 absolute top-0 right-2 z-50 cursor-pointer lg:-z-10">close</span>
+                        <img src="../../assets/images/user.jpg" alt="student_img"
+                            class="w-28 h-28 object-cover rounded-full">
+                        <div class="z-20">
+                            <h1 class="font-bold text-xl text-body-500">Student Full Name</h1>
+                            <p class="text-body-300">Student ID</p>
+                        </div>
+                        <img src="../../assets/images/frame.svg" alt="frame" class="absolute right-0 bottom-0 w-28">
+                    </div>
+
+                    <div class="p-4">
+                        <div class="border border-slate-300 rounded p-2">
+                            <p class="text-sm font-semibold text-secondary-800">Basic Information</p>
+
+                            <ul class="text-sm flex gap-x-10 gap-y-5 flex-wrap whitespace-nowrap mt-2">
+                                <li>
+                                    <p class="text-body-300">Phone</p>
+                                    <p class="text-body-400 font-semibold">08012345678</p>
+                                </li>
+                                <li>
+                                    <p class="text-body-300">Email</p>
+                                    <p class="text-body-400 font-semibold">amalagucosmos@example.com</p>
+                                </li>
+                                <li>
+                                    <p class="text-body-300">Level</p>
+                                    <p class="text-body-400 font-semibold">500</p>
+                                </li>
+                                <li>
+                                    <p class="text-body-300">CGPA</p>
+                                    <p class="text-body-400 font-semibold">4.55</p>
+                                </li>
+                                <li>
+                                    <p class="text-body-300">S/N</p>
+                                    <p class="text-body-400 font-semibold">123</p>
+                                </li>
+                                <li class="md:w-full">
+                                    <p class="text-body-300">Address</p>
+                                    <p class="text-body-400 font-semibold">148, Something Street, Owerri, Nigeria</p>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div id="chart-container"
+                            class="border border-slate-300 rounded p-2 mt-2 h-72 overflow-y-scroll">
+                            <div class="flex items-center justify-between">
+                                <p class="text-sm font-semibold text-secondary-800">Progress</p>
+                                <div class="flex items-center gap-4 text-xs font-semibold text-body-400">
+                                    <div class="flex gap-1">
+                                        <label for="bar">bar chart</label>
+                                        <input type="radio" name="chartType" id="bar" checked>
+                                    </div>
+
+                                    <div class="flex gap-1">
+                                        <label for="line">line chart</label>
+                                        <input type="radio" name="chartType" id="line">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Create an API to get the student's GPA and I will use it to populate these charts using Javascript -->
+                            <canvas id="bar-chart" class="text-xs text-body-400 mt-2 w-full overflow-scroll"></canvas>
+
+                            <canvas id="line-chart"
+                                class="text-xs text-body-400 mt-2 w-full overflow-scroll hidden"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="grid center -mt-4 select-none lg:hidden">
+                        <button @click="detailsOpen = false" type="button"
+                            class="flex flex-col items-center text-secondary-800 hover:text-[var(--danger-600)]">
+                            <span class="material-symbols-rounded overflow-hidden">expand_less</span>
+                            <span class="text-sm font-semibold transition -mt-2">close</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div x-show="open" x-on:click.outside="open = false" x-transition id="advisor-details"
+                class="fixed top-12 right-0 bg-white flex flex-col gap-2 overflow-y-scroll w-80 p-2 shadow-lg z-[999]">
+
+                <div class="rounded border border-slate-400 flex flex-col gap-4 items-center px-4 py-16">
+                    <img src="../../assets/images/user_2.jpg" alt="user_img"
+                        class="w-32 h-32 object-cover rounded-full">
+
+                    <div class="flex flex-col items-center gap-1 text-center">
+                        <h1 class="text-body-800 text-2xl">
+                            Advisor Full Name
+                        </h1>
+                        <p class="text-slate-800">
+                            Staff ID
+                        </p>
+                        <p class="text-slate-600 text-sm">
+                            Class:
+                            <span class="font-semibold text-slate-800">
+                                20XX-20YY
+                            </span>
+                        </p>
+                        <p class="text-slate-600 text-sm">Current Level:
+                            <span class="font-semibold text-slate-800 uppercase">
+                                500 level
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-primary-50 rounded flex items-center justify-center p-1 gap-4">
+                    <div class="flex flex-col items-center justify-end">
+                        <p class="text-secondary-800 text-lg">20XX/20YY</p>
+                        <p class="text-body-300">session</p>
+                    </div>
+                    <span class="bg-secondary-800 w-[1px] h-10"></span>
+                    <div class="flex flex-col items-center justify-end">
+                        <p class="text-secondary-800 text-lg">Harmattan</p>
+                        <p class="text-body-300">semester</p>
+                    </div>
+                </div>
+
+                <div
+                    class="notice-card bg-primary-50 rounded w-full h-full pl-4 pr-14 pt-10 pb-4 flex flex-col justify-between items-start relative ">
+                    <p class="text-lg text-secondary-800 z-10">
+                        XX days left for course registration, please remind the students to register before the time
+                        runs out!
+                    </p>
+                    <img src="../../assets/images/frame.svg" alt="frame" class="absolute bottom-0 right-0 ">
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+<script>
+
+</script>
+{% include 'base/advisor-footer.html' %}
+
+</html>

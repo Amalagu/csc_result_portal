@@ -1,0 +1,150 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'head.html' %}
+    <title>Student - Courses</title>
+</head>
+
+<body x-data="{navIsOpen: false, open: false}">
+    <div id="overlay"></div>
+
+    <main class="xl:flex">
+        {% include 'sidebar.html' %}
+
+        <section class="grow">
+            {% include 'header.html' %}
+
+            <!-- Display this part if there are registered courses -->
+            <div id="app" class="mt-12 p-2 overflow-y-scroll relative
+            xl:mt-0">
+                <!-- Additional styles in student.css -->
+                <div class="w-[100%] lg:w-[80%] flex items-center justify-between">
+                    <div class="grid gap-2">
+                        <h1 class="text-lg text-body-300 font-semibold">Courses</h1>
+                        <p class="text-secondary-800 font-semibold text-sm">Course Registration History</p>
+                    </div>
+                    <a href="{% url 'course_registeration' %}">
+                        <button type="button"
+                            class="btn bg-[var(--primary)] rounded text-white hover:bg-[var(--primary-700)] transition text-sm">
+                            Register Courses
+                        </button>
+                    </a>
+                </div>
+
+                <div id="student-table-container-courses" class="overflow-scroll mt-4">
+                    <table class="table w-[100%] lg:w-[80%] whitespace-nowrap">
+                        <thead>
+                            <th>Session</th>
+                            <th>Semester</th>
+                            <th>Level</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            {% for entry in registered_semesters %}
+                            <tr>
+                                <td>{{entry.session}}</td>
+                                <td>{{entry.semester}}</td>
+                                <td>{{entry.student__level}}</td>
+                                <td>
+                                    <a
+                                        href="{% url 'view_course_registeration_details' session=entry.session semester=entry.semester %}">
+                                        <button
+                                            class="text-xs font-semibold p-[.3rem] rounded text-white bg-[var(--primary)] hover:bg-[var(--primary-700)] transition"
+                                            type="button">
+                                            View details
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--  -->
+
+            <!-- Display this part if there are no registered courses -->
+            <div id="no-courses" class="h-screen p-2 overflow-y-scroll relative hidden flex-col gap-5 center">
+                <img class="w-72" src="/public/assets/images/no_courses.svg" alt="no_courses_icon">
+                <div class="flex flex-col items-center gap-5 text-center">
+                    <p class="text-white-800">
+                        Oops! It looks like you haven't registered for any courses yet. <br>
+                        Register your courses before the deadline to ensure you can view them when they become
+                        available.
+                    </p>
+
+                    <a href="./course-registration.html">
+                        <button type="button"
+                            class="btn bg-[var(--primary)] rounded text-white hover:bg-[var(--primary-700)] transition">
+                            Register Courses
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <!--  -->
+
+            <div x-show="open" x-on:click.outside="open = false" x-transition id="student-details"
+                class="fixed top-12 right-0 bg-white flex flex-col gap-2 overflow-y-scroll w-80 p-2 shadow-lg z-[999]">
+
+                <div class="rounded border border-slate-400 flex flex-col gap-4 items-center px-4 py-16">
+                    <img src="../../assets/images/user.jpg" alt="user_img" class="w-32 h-32 object-cover rounded-full">
+
+                    <div class="flex flex-col items-center gap-1 text-center">
+                        <h1 class="text-body-800 text-2xl">
+                            Student Full Name
+                        </h1>
+                        <p class="text-slate-800">
+                            Student Reg Number
+                        </p>
+                        <p class="text-slate-600 text-sm">
+                            Class:
+                            <span class="font-semibold text-slate-800">
+                                20XX-20YY
+                            </span>
+                        </p>
+                        <p class="text-slate-600 text-sm">Advisor:
+                            <span class="font-semibold text-slate-800">
+                                Advisor Name
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-primary-50 rounded flex items-center justify-center p-1 gap-4">
+                    <div class="flex flex-col items-center justify-end">
+                        <p class="text-secondary-800 text-lg">20XX/20YY</p>
+                        <p class="text-body-300">session</p>
+                    </div>
+                    <span class="bg-secondary-800 w-[1px] h-10"></span>
+                    <div class="flex flex-col items-center justify-end">
+                        <p class="text-secondary-800 text-lg">Harmattan</p>
+                        <p class="text-body-300">semester</p>
+                    </div>
+                </div>
+
+                <div
+                    class="notice-card bg-primary-50 rounded w-full h-full pl-4 pr-14 pt-10 pb-4 flex flex-col justify-between items-start relative ">
+                    <p class="text-lg text-secondary-800 z-10">
+                        XX days left for course registration, register now to access your results
+                    </p>
+                    <a href="./course-registration.html">
+                        <button type="button"
+                            class="btn bg-[var(--primary)] rounded text-white hover:bg-[var(--primary-700)] transition">
+                            Register Courses
+                        </button>
+                    </a>
+                    <img src="../../assets/images/frame.svg" alt="frame" class="absolute bottom-0 right-0 ">
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+<script>
+
+</script>
+{% include 'footer.html' %}
+
+</html>

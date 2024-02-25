@@ -1,0 +1,192 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'base/advisor-head.html' %}
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Advisor - Results</title>
+</head>
+
+<body x-data="{navIsOpen: false, open: false}">
+    <div id="overlay"></div>
+
+    <main class="xl:flex">
+        {% include 'base/advisor-sidebar.html' %}
+
+        <section class="grow">
+            {% include 'base/advisor-header.html' %}
+
+            <!-- Display this part if there are registered courses -->
+            <div id="app" class="mt-12 p-2 overflow-y-scroll relative
+            xl:mt-0">
+                <!-- Additional styles in student.css -->
+                <a href="./results.html"
+                    class="flex items-center text-sm font-semibold text-body-200 hover:text-primary">
+                    <span class="material-symbols-rounded">arrow_left</span>
+                    View results
+                </a>
+
+                <div class="w-full lg:w-[80%]">
+                    <form action="" class="flex items-center gap-2 w-full relative md:w-[32rem]">
+                        <label for="student-search" class="text-body-200 absolute top-3 left-1">
+                            <span class="material-symbols-rounded">search</span>
+                        </label>
+                        <input type="search" name="studentSearch" id="student-search" placeholder="Search..."
+                            class="border border-[var(--primary)] outline-none h-8  pl-8 text-body-300 w-full">
+                        <div class="select">
+                            <select name="searchBy" id="searchBy">
+                                <option value="">Search by</option>
+                                <option value="name">Name</option>
+                                <option value="regNum">Reg. Number</option>
+                            </select>
+                        </div>
+                        <button type="submit"
+                            class="btn-sm text-white bg-[var(--primary)] hover:bg-[var(--primary-700)] transition rounded h-8">
+                            Submit
+                        </button>
+                    </form>
+
+                    <form action='' class="flex items-end flex-wrap gap-x-2 md:w-[34rem]" id="result-options-form"
+                        method="GET">
+                        {% csrf_token %}
+                        <div class="select grow">
+                            <label for="session">Session</label>
+                            <select name="session" id="session" class="w-full">
+                                <option value="" class>Select session</option>
+                                {% for session in sessions %}
+                                <option value={{session.name}}>{{session.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="select grow">
+                            <label for="semester">Semester</label>
+                            <select name="semester" id="semester" class="w-full">
+                                <option value="">Select semester</option>
+                                {% for semester in semesters %}
+                                <option value={{semester.name}}>{{semester.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="select grow">
+                            <label for="course">Course</label>
+                            <select name="course" id="course" class="w-full">
+                                <option value="">Select course</option>
+                                <option value="all">All courses</option>
+                                {% for course in courses %}
+                                <option value={{course.id}}>{{course.code}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <button type="submit"
+                            class="btn-sm text-white bg-[var(--primary)] hover:bg-[var(--primary-700)] transition rounded h-8"
+                            disabled>
+                            View Result
+                        </button>
+                    </form>
+                    <div class="flex justify-end">
+                        <button type="button"
+                            class="btn-sm text-white bg-[var(--primary)] hover:bg-[var(--primary-700)] transition rounded h-8">
+                            Print
+                        </button>
+                    </div>
+                </div>
+
+                <div id="advisor-results-container-single" class="pb-4 lg:w-[80%]">
+                    <table class="table whitespace-nowrap w-full">
+                        <thead>
+                            <th class="w-10">S/N</th>
+                            <th>Name</th>
+                            <th>Reg. No.</th>
+                            <th class="w-10">Program</th>
+                            <th class="w-10">Test</th>
+                            <th class="w-10">Lab</th>
+                            <th class="w-10">Exam</th>
+                            <th class="w-10">Total</th>
+                            <th class="w-10">Grade</th>
+                            <th class="w-10">Remark</th>
+                        </thead>
+                        <tbody>
+                            {% for result in selected_course_result %}
+                            <tr>
+                                <td>1</td>
+                                <td>{{result.student.student.get_full_name}}</td>
+                                <td>{{result.student.registeration_number}}</td>
+                                <td>CSC</td>
+                                <td>{{result.testscore}}</td>
+                                <td>{{result.labscore}}</td>
+                                <td>{{result.examscore}}</td>
+                                <td>{{result.totalscore}}</td>
+                                <td>{{result.grade}}</td>
+                                <td>{{result.remark}}</td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div x-show="open" x-on:click.outside="open = false" x-transition id="advisor-details"
+                class="fixed top-12 right-0 bg-white flex flex-col gap-2 overflow-y-scroll w-80 p-2 shadow-lg z-[999]">
+
+                <div class="rounded border border-slate-400 flex flex-col gap-4 items-center px-4 py-16">
+                    <img src="../../assets/images/user_2.jpg" alt="user_img"
+                        class="w-32 h-32 object-cover rounded-full">
+
+                    <div class="flex flex-col items-center gap-1 text-center">
+                        <h1 class="text-body-800 text-2xl">
+                            Advisor Full Name
+                        </h1>
+                        <p class="text-slate-800">
+                            Staff ID
+                        </p>
+                        <p class="text-slate-600 text-sm">
+                            Class:
+                            <span class="font-semibold text-slate-800">
+                                20XX-20YY
+                            </span>
+                        </p>
+                        <p class="text-slate-600 text-sm">Current Level:
+                            <span class="font-semibold text-slate-800 uppercase">
+                                500 level
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-primary-50 rounded flex items-center justify-center p-1 gap-4">
+                    <div class="flex flex-col items-center justify-end">
+                        <p class="text-secondary-800 text-lg">20XX/20YY</p>
+                        <p class="text-body-300">session</p>
+                    </div>
+                    <span class="bg-secondary-800 w-[1px] h-10"></span>
+                    <div class="flex flex-col items-center justify-end">
+                        <p class="text-secondary-800 text-lg">Harmattan</p>
+                        <p class="text-body-300">semester</p>
+                    </div>
+                </div>
+
+                <div
+                    class="notice-card bg-primary-50 rounded w-full h-full pl-4 pr-14 pt-10 pb-4 flex flex-col justify-between items-start relative ">
+                    <p class="text-lg text-secondary-800 z-10">
+                        XX days left for course registration, please remind the students to register before the time
+                        runs out!
+                    </p>
+                    <img src="../../assets/images/frame.svg" alt="frame" class="absolute bottom-0 right-0 ">
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+<script>
+
+</script>
+{% include 'base/advisor-footer.html' %}
+<script type="module" src="{% static 'js/advisor-results.js' %}"></script>
+
+</html>

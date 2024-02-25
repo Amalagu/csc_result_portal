@@ -1,0 +1,76 @@
+
+#app {
+    height: calc(100dvh - 3rem);
+}
+
+#courses {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: .75rem;
+}
+
+#dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14.5rem, 1fr));
+    gap: .75rem;
+}
+
+#details {
+    height: calc(100dvh - 3rem);
+}
+
+#student-details {
+    height: calc(100dvh - 3rem);
+}
+
+#course-registration-container {
+    height: calc(100dvh - 6rem);
+}
+
+#student-table-container {
+    height: calc(100dvh - 15rem);
+}
+
+
+#view-results-container {
+    height: calc(100dvh - 12.5rem)
+}
+
+#view-results-container > #student-table-container {
+    height: calc(100dvh - 10rem);
+}
+
+#student-table-container-courses {
+    height: calc(100dvh - 9rem)
+}
+
+#profile-container {
+    height: calc(100dvh - 6rem);
+}
+
+/* #registered-courses-details-container {
+    height: calc(100dvh - 8.5rem);
+}
+ */
+@media (min-width: 768px) {
+    #student-course-details-home {
+        width: 22rem;
+        --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+        box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+        border-color: rgb(148 163 184 / 1);
+    }
+}
+
+@media (min-width: 1024px) {
+    #details {
+        height: auto;
+    }
+}
+
+@media (min-width: 1280px) {
+    #no-courses {
+        height: calc(100dvh - 3rem)
+    }
+}
+

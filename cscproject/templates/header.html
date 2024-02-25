@@ -1,0 +1,40 @@
+{% load static %}
+
+{% block 'header' %}
+<header class="h-12 bg-white flex items-center justify-between p-2 fixed w-screen top-0 z-50
+            xl:relative xl:w-full">
+    <div class="flex items-center gap-2 xl:hidden">
+        <span x-on:click="navIsOpen = true"
+            class="material-symbols-rounded text-body-800 cursor-pointer hover:text-[var(--primary-700)] transition">
+            menu
+        </span>
+        <img src="{% static 'img/logo.svg' %}" alt="logo" width="26">
+    </div>
+
+    <div class="relative">
+        <label for="search"
+            class="material-symbols-rounded overflow-hidden absolute left-1 top-[.3rem] text-body-400 text-[1.4rem]">
+            search
+        </label>
+        <input type="search" id="search" placeholder="Search..." class="rounded bg-[var(--primary-50)] text-body-400 outline-none h-8 w-full pl-7 pr-2 placeholder:text-[var(--body-200)]
+                    md:w-[30rem]">
+    </div>
+
+    <div class="flex items-center gap-1">
+        <img src="{% static 'img/user.jpg' %}" alt="user_img" class="w-7 rounded-full">
+
+        <div class="hidden lg:block">
+            <p class="text-xs font-semibold text-body-800 whitespace-nowrap text-ellipsis overflow-hidden">
+                {{request.user.get_full_name}}</p>
+            <p class="text-xs text-body-300">{{request.user.email}}</p>
+        </div>
+
+        <div class="flex center">
+            <span x-on:click="open = !open" x-text="open ? 'expand_less' : 'expand_more'"
+                class="material-symbols-rounded text-body-800 cursor-pointer select-none hover:text-[var(--primary-700)]">
+                expand_more
+            </span>
+        </div>
+    </div>
+</header>
+{% endblock %}

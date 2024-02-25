@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'base/advisor-head.html' %}
+    <title>Advisor - Home</title>
+</head>
+
+<body x-data="{navIsOpen: false, open: false, courseOpen: false}">
+    <div id="overlay"></div>
+
+    <main class="xl:flex">
+        {% include 'base/advisor-sidebar.html' %}
+
+        <section class="grow">
+            {% include 'base/advisor-header.html' %}
+
+            <div id="app" class="mt-12 p-2 overflow-y-scroll relative
+            lg:grid lg:grid-cols-3 lg:overflow-y-visible lg:gap-1
+            xl:mt-0 xl:grid-cols-7">
+                <!-- Additional styles in student.css -->
+                <div class="lg:col-span-2 lg:h-[100%] lg:overflow-y-scroll select-none pb-10
+                xl:col-span-5">
+                    <h1 class="text-lg text-body-300 font-semibold">Dashboard</h1>
+
+                    <div class="courses mt-2" id="dashboard-cards">
+                        <!-- DASHBOARD CARD -->
+                        <div class="overflow-hidden bg-primary-50 rounded h-40 p-4 flex flex-col justify-between">
+                            <div class="flex items-center gap-2 text-black-300">
+                                <span class="material-symbols-rounded">
+                                    groups
+                                </span>
+                                <p class="text-lg">Students</p>
+                            </div>
+                            <div class="flex justify-end text-primary-300">
+                                <p class="text-[2.5rem] font-semiboold">{{number_of_students_in_class}}</p>
+                            </div>
+                        </div>
+
+                        <div class="overflow-hidden bg-secondary-50 rounded h-40 p-4 flex flex-col justify-between">
+                            <div class="flex items-center gap-2 text-black-300">
+                                <span class="material-symbols-rounded">
+                                    auto_stories
+                                </span>
+                                <p class="text-lg">Semester Courses</p>
+                            </div>
+                            <div class="flex justify-end text-secondary-300">
+                                <p class="text-[2.5rem] font-semiboold">{{number_of_semester_courses}}</p>
+                            </div>
+                        </div>
+
+                        <div class="overflow-hidden bg-danger-50 rounded h-40 p-4 flex flex-col justify-between">
+                            <div class="flex items-center gap-2 text-black-300">
+                                <span class="material-symbols-rounded">
+                                    bar_chart
+                                </span>
+                                <p class="text-lg">Results Uploaded</p>
+                            </div>
+                            <div class="flex justify-end text-danger-300">
+                                <p class="text-[2.5rem] font-semiboold">71</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top 5 Students -->
+                    <h1 class="text-lg text-body-300 font-semibold mt-8 flex gap-1">
+                        Top Five
+                        <span class="material-symbols-rounded">star</span>
+                    </h1>
+
+                    <div class="mt-2 overflow-x-scroll">
+                        <table class="table w-[100%] whitespace-nowrap">
+                            <thead>
+                                <th class="min-w-16"></th>
+                                <th>Student Name</th>
+                                <th>Reg. Number</th>
+                                <th class="w-20">Level</th>
+                                <th class="w-20">CGPA</th>
+                            </thead>
+                            <tbody>
+                                {% for student in top_students %}
+                                <tr>
+                                    <td>
+                                        <img src="../../assets/images/user.jpg" alt="student_pic"
+                                            class="w-10 h-10 rounded-full object-cover">
+                                    </td>
+                                    <td>{{student.student.get_full_name}}</td>
+                                    <td>{{student.registeration_number}}</td>
+                                    <td>{{student.level}}</td>
+                                    <td>{{student.cgpa}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--  -->
+
+                    <h1 class="text-lg text-body-300 font-semibold mt-8">Results Uploaded</h1>
+
+                    <div class="mt-2 overflow-x-scroll">
+                        <table class="table w-[100%] whitespace-nowrap">
+                            <thead>
+                                <th class="w-20">Course Code</th>
+                                <th>Course Title</th>
+                                <th class="w-20">Units</th>
+                                <th class="w-20"></th>
+                            </thead>
+                            <tbody>
+                                {% for result in results_uploaded %}
+                                <tr>
+                                    <td class="uppercase">{{result.course_code}}</td>
+                                    <td>Course_Title</td>
+                                    <td>3</td>
+                                    <td>
+                                        <button
+                                            class="text-xs font-semibold p-[.3rem] rounded text-white bg-[var(--primary)] hover:bg-[var(--primary-700)] transition"
+                                            type="button">
+                                            Download
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div x-show="open" x-on:click.outside="open = false" x-transition id="details" class="fixed top-12 right-0 bg-white flex flex-col gap-2 overflow-y-scroll w-80 p-2 shadow-lg
+                lg:h-[100%] lg:relative lg:top-0 lg:shadow-none lg:p-1 lg:col-span-1 lg:w-auto
+                xl:col-span-2">
+
+                    <div class="rounded border border-slate-400 flex flex-col gap-4 items-center px-4 py-16">
+                        <img src="{% static 'img/user_2.jpg' %}" alt="user_img"
+                            class="w-32 h-32 object-cover rounded-full">
+
+                        <div class="flex flex-col items-center gap-1 text-center">
+                            <h1 class="text-body-800 text-2xl">
+                                {{advisor_fullname}}
+                            </h1>
+                            <p class="text-slate-800">
+                                Staff ID
+                            </p>
+                            <p class="text-slate-600 text-sm">
+                                Class:
+                                <span class="font-semibold text-slate-800">
+                                    {{current_class_set}}
+                                </span>
+                            </p>
+                            <p class="text-slate-600 text-sm">Current Level:
+                                <span class="font-semibold text-slate-800 uppercase">
+                                    {{current_class_level}}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-primary-50 rounded flex items-center justify-center p-1 gap-4">
+                        <div class="flex flex-col items-center justify-end">
+                            <p class="text-secondary-800 text-lg">{{current_session}}</p>
+                            <p class="text-body-300">session</p>
+                        </div>
+                        <span class="bg-secondary-800 w-[1px] h-10"></span>
+                        <div class="flex flex-col items-center justify-end">
+                            <p class="text-secondary-800 text-lg">{{current_semester}}</p>
+                            <p class="text-body-300">semester</p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="notice-card bg-primary-50 rounded w-full h-full pl-4 pr-14 pt-10 pb-4 flex flex-col justify-between items-start relative ">
+                        <p class="text-lg text-secondary-800 z-10">
+                            XX days left for course registration, please remind the students to register before the time
+                            runs out!
+                        </p>
+                        <img src="../../assets/images/frame.svg" alt="frame" class="absolute bottom-0 right-0 ">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+</body>
+{% include 'base/advisor-footer.html' %}
+
+</html>

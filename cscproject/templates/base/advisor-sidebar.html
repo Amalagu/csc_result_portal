@@ -1,0 +1,32 @@
+{% load static %}
+
+{% block 'sidebar' %}
+<nav x-show="navIsOpen" x-transition x-on:click.outside="navIsOpen = false"
+    class="w-[16rem] h-screen overflow-hidden flex fixed flex-col gap-2 pl-2 pr-1 bg-white top-0 z-10 shadow-2xl
+        xl:flex xl:overflow-y-scroll xl:relative xl:w-[16rem] shrink-0 xl:h-screen xl:shadow-none xl:border-r xl:border-r-slate-300">
+
+    <div class="xl:hidden">
+        <span x-on:click="navIsOpen = false"
+            class="material-symbols-rounded cursor-pointer text-body-800 mt-3 hover:text-red-500 hover:font-semibold">
+            close
+        </span>
+    </div>
+
+    <div class="h-12 pt-1 mb-2">
+        <div id="logo-component">
+            <img src="{% static 'img/logo.svg' %}" alt="logo" width="38">
+        </div>
+    </div>
+
+    <div id="nav">
+        <a href="{% url 'advisor_home' %}" class="active"><span class="material-symbols-rounded">home</span>Home</a>
+        <a href="{% url 'view_class_list' %}"><span class=" material-symbols-rounded">group</span>Class</a>
+        <a href="{% url 'advisor_view_result' %}"><span class="material-symbols-rounded">school</span>Results</a>
+        <a href="{% url 'list_trancript' %}"><span class="material-symbols-rounded">auto_stories</span>Transcripts</a>
+        <a href="{% url 'view_advisor_profile' %}"><span
+                class="material-symbols-rounded">account_circle</span>Profile</a>
+        <!-- <a href="#"><span class="material-symbols-rounded">settings</span>Settings</a> -->
+        <a href="{% url 'logout' %}"><span class="material-symbols-rounded">logout</span>Logout</a>
+    </div>
+</nav>
+{% endblock %}

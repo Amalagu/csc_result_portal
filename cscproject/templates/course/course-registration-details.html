@@ -1,0 +1,207 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'head.html' %}
+    <title>Student - Courses</title>
+</head>
+
+<body x-data="{navIsOpen: false, open: false, courseOpen: false}">
+    <div id="overlay"></div>
+
+    <main class="xl:flex">
+        {% include 'sidebar.html' %}
+
+        <div class="grow">
+            {% include 'header.html' %}
+
+            <div id="app" class="mt-12 p-2 overflow-y-scroll relative
+            xl:mt-0">
+                <!-- Additional styles in student.css -->
+                <div class="lg:w-[80%]">
+                    <div class="flex items-center justify-between">
+                        <div class="grid gap-2">
+                            <h1 class="text-lg text-body-300 font-semibold">Courses</h1>
+                            <p class="text-secondary-800 font-semibold text-sm">Course Registration Details</p>
+                        </div>
+
+                        <button type="button"
+                            class="btn-sm bg-[var(--primary)] rounded text-white hover:bg-[var(--primary-700)] transition text-sm">
+                            Print
+                        </button>
+                    </div>
+                </div>
+
+                <div id="registered-courses-details-container" class="overflow-y-scroll mt-2 border slate-400 rounded p-2 pb-10 w-full md:flex md:flex-col md:gap-2 
+                lg:w-[80%]">
+                    <div class="flex flex-col center">
+                        <img src="../../assets/images/futo-log.png" alt="futo-logo" width="35">
+                        <h1 class="text-sm font-semibold text-body-400 md:text-base xl:text-lg">
+                            FEDERAL UNIVERSITY OF TECHNOLOGY, OWERRI
+                        </h1>
+                        <p class="text-xs text-body-600 font-semibold md:text-sm xl:text-base">DEPARTMENT OF COMPUTER
+                            SCIENCE (SICT)</p>
+                    </div>
+
+                    <div class="flex flex-col gap-3 center mt-4 w-full
+                    lg:grid lg:grid-cols-4 lg:p-5">
+                        <img src="../../assets/images/user.jpg" alt="user"
+                            class="rounded-full w-16 lg:col-span-1 lg:w-24 xl:w-28">
+
+                        <div class="text-[.78rem] text-body-800 w-full flex flex-col items-center gap-2 whitespace-nowrap
+                        md:grid md:grid-cols-2 md:text-sm
+                        lg:col-span-3">
+                            <div class="grid grid-cols-2 gap-2 w-full">
+                                <p class="text-right md:text-left">Full Name:</p>
+                                <span class="uppercase font-semibold">Student Name</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 w-full">
+                                <p class="text-right md:text-left">Registration Number:</p>
+                                <span class="uppercase font-semibold">Student ID</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 w-full">
+                                <p class="text-right md:text-left">School:</p>
+                                <span class="uppercase font-semibold">SICT</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 w-full">
+                                <p class="text-right md:text-left">Department:</p>
+                                <span class="uppercase font-semibold">Computer Science</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 w-full">
+                                <p class="text-right md:text-left">Entry Mode:</p>
+                                <span class="uppercase font-semibold">UTME</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 w-full">
+                                <p class="text-right md:text-left">Level:</p>
+                                <span class="uppercase font-semibold">500</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 w-full">
+                                <p class="text-right md:text-left">Session:</p>
+                                <span class="uppercase font-semibold">2022-2023</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 w-full">
+                                <p class="text-right md:text-left">Semester:</p>
+                                <span class="uppercase font-semibold">Harmattan</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 overflow-x-scroll">
+                        <table class="table w-full whitespace-nowrap">
+                            <thead>
+                                <th>Course_Code</th>
+                                <th>Course_Title</th>
+                                <th>Units</th>
+                                <th>Type</th>
+                            </thead>
+                            <tbody>
+                                {% for course in all_current_semester_registered_courses %}
+                                <tr>
+                                    <td>{{course.course.code}}</td>
+                                    <td>{{course.course.title}}</td>
+                                    <td>{{course.course.unit}}</td>
+                                    {% if course.course.iselective %}
+                                    <td class="uppercase">Elective</td>
+                                    {% else %}
+                                    <td class="uppercase">Compulsory</td>
+
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+
+                                <tr>
+                                    <td></td>
+                                    <td class="uppercase">Total</td>
+                                    <td>{{total_registered_units}}</td>
+                                    <td></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-20 grid grid-cols-2 gap-x-4 gap-y-16 text-[.8rem]
+                    md:w-[80%] md:self-center md:gap-x-12 md:text-sm
+                    lg:w-[60%]">
+                        <div
+                            class="text-body-600 font-semibold p-1 border-t-2 border-t-[var(--body-600)] border-dashed text-center">
+                            Student's Signature
+                        </div>
+                        <div
+                            class="text-body-600 font-semibold p-1 border-t-2 border-t-black border-dashed text-center">
+                            Date
+                        </div>
+                        <div
+                            class="text-body-600 font-semibold p-1 border-t-2 border-t-black border-dashed text-center">
+                            Advisor's Signature
+                        </div>
+                        <div
+                            class="text-body-600 font-semibold p-1 border-t-2 border-t-black border-dashed text-center">
+                            HOD's Signature
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div x-show="open" x-on:click.outside="open = false" x-transition id="student-details"
+                class="fixed top-12 right-0 bg-white flex flex-col gap-2 overflow-y-scroll w-80 p-2 shadow-lg z-[999]">
+
+                <div class="rounded border border-slate-400 flex flex-col gap-4 items-center px-4 py-16">
+                    <img src="../../assets/images/user.jpg" alt="user_img" class="w-32 h-32 object-cover rounded-full">
+
+                    <div class="flex flex-col items-center gap-1 text-center">
+                        <h1 class="text-body-800 text-2xl">
+                            Student Full Name
+                        </h1>
+                        <p class="text-slate-800">
+                            Student Reg Number
+                        </p>
+                        <p class="text-slate-600 text-sm">
+                            Class:
+                            <span class="font-semibold text-slate-800">
+                                20XX-20YY
+                            </span>
+                        </p>
+                        <p class="text-slate-600 text-sm">Advisor:
+                            <span class="font-semibold text-slate-800">
+                                Advisor Name
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-primary-50 rounded flex items-center justify-center p-1 gap-4">
+                    <div class="flex flex-col items-center justify-end">
+                        <p class="text-secondary-800 text-lg">20XX/20YY</p>
+                        <p class="text-body-300">session</p>
+                    </div>
+                    <span class="bg-secondary-800 w-[1px] h-10"></span>
+                    <div class="flex flex-col items-center justify-end">
+                        <p class="text-secondary-800 text-lg">Harmattan</p>
+                        <p class="text-body-300">semester</p>
+                    </div>
+                </div>
+
+                <div
+                    class="notice-card bg-primary-50 rounded w-full h-full pl-4 pr-14 pt-10 pb-4 flex flex-col justify-between items-start relative ">
+                    <p class="text-lg text-secondary-800 z-10">
+                        XX days left for course registration, register now to access your results
+                    </p>
+                    <a href="./course-registration.html">
+                        <button type="button"
+                            class="btn bg-[var(--primary)] rounded text-white hover:bg-[var(--primary-700)] transition">
+                            Register Courses
+                        </button>
+                    </a>
+                    <img src="../../assets/images/frame.svg" alt="frame" class="absolute bottom-0 right-0 ">
+                </div>
+            </div>
+            </section>
+    </main>
+</body>
+{% include 'footer.html' %}
+
+</html>

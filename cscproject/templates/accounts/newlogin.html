@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="{% static 'public/assets/images/logo.svg' %}" />
+  <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script src="https://unpkg.com/petite-vue" defer init></script>
+  <title>CSC Portal - FUTO</title>
+</head>
+
+<body>
+  <div id="overlay"></div>
+
+  <main class="w-[100dvw] h-[100dvh] flex flex-col center">
+    <div class="flex flex-col center gap-2">
+      <h1 class="text-2xl font-light text-primary select-none">Explore</h1>
+      <div class="flex gap-3">
+        <a href="#" class="font-semibold bg-black-100 text-white py-1 px-2 rounded text-sm cursor-not-allowed">Admin</a>
+        <a href="pages/advisor/index.html"
+          class="font-semibold bg-secondary-600 text-white py-1 px-2 rounded text-sm">Advisor</a>
+        <a href="pages/student/index.html"
+          class="font-semibold bg-warning-600 text-white py-1 px-2 rounded text-sm">Student</a>
+      </div>
+    </div>
+
+    <div class="h-[25rem] w-96 flex flex-col gap-10 lg:shadow-lg lg:p-5 lg:rounded justify-center">
+
+      <div id="logo-component"></div>
+
+      <form id="login-form" class="flex flex-col gap-6 text-body-400" method="POST">
+        {% csrf_token %}
+
+        <div v-scope="{ isFocused: false }" class="flex flex-col relative">
+          <label for="username" :class="['absolute left-2  transition',
+          isFocused ? '-translate-y-[.75rem] bg-primary-50 px-2 text-sm font-semibold'
+          : 'top-[.75rem]']">
+            Username
+          </label>
+
+          <input class="input rounded h-12" @focus="isFocused = true"
+            @blur="$el.value === '' ? isFocused = false : true" type="text" id="username" name="username"
+            value="{{ form.username.value }}">
+        </div>
+
+        <div v-scope="{ isFocused: false }" class="flex flex-col relative">
+
+          <label for="password" :class="['absolute left-2  transition',
+          isFocused ? '-translate-y-[.75rem] bg-primary-50 px-2 text-sm font-semibold'
+          : 'top-[.75rem]']">
+            Password
+          </label>
+
+          <input class="input rounded h-12" @focus="isFocused = true"
+            @blur="$el.value === '' ? isFocused = false : true" type="password" id="password" name="password"
+            value="{{ form.password.value }}">
+
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-1">
+            <input type="checkbox" class="checkbox" id="remember">
+            <label for="remember">Remember me</label>
+          </div>
+
+          <a href="#" class="hover:underline">Forgot password?</a>
+        </div>
+
+        <button class="btn-primary bg-[var(--primary)] rounded h-12 transition rounded" type="submit">Sign
+          in</button>
+
+      </form>
+    </div>
+  </main>
+
+  <script type="module" src="{% static 'js/main.js' %}"></script>
+  <script type="module" src="{% static 'js/login.js' %}"></script>
+</body>
+
+</html>
