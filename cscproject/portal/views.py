@@ -31,7 +31,7 @@ def advisor_home_view(request):
     current_class_set = advisor.advisor_class
     current_class_level = advisor.advisor_class.current_level
     number_of_students_in_class = advisor.advisor_class.students.count()
-    number_of_semester_courses = Course.objects.filter(level=current_class_level).count()
+    number_of_semester_courses = Course.objects.filter(level=current_class_level, semester=current_semester).count()
     top_students = Student.objects.filter(student_class=current_class_set).exclude(cgpa=None).order_by('-cgpa')[:5]
     #top_students = Student.objects.filter(student_class=current_class_set, cgpa__isnull=False).order_by('-cgpa')[:5]
     results_uploaded = UploadedFile.objects.filter(session=current_session, semester=current_semester, class_set=current_class_set)
