@@ -138,11 +138,29 @@ class Student(models.Model):
     
 
 
-class Advisor(models.Model):
-    advisor = models.OneToOneField(User, on_delete=models.CASCADE)
-    advisor_class = models.ForeignKey(StudentClass, null= True, on_delete=models.SET_NULL)
+
+class DepartmentStaff(models.Model):
+    staff = models.OneToOneField(User, on_delete=models.CASCADE)
     staffid = models.CharField(max_length=12, unique=True, blank=False, null=False)
     designation = models.CharField(max_length=10, choices=designation_list)
 
+
+
+class Advisor(models.Model):
+    advisor = models.OneToOneField(User, on_delete=models.CASCADE)
+    advisor_class = models.ForeignKey(StudentClass, null= True, on_delete=models.SET_NULL)
+    staff = models.OneToOneField(DepartmentStaff, on_delete=models.CASCADE, null=True, blank=True)
+    staffid = models.CharField(max_length=12, unique=True, blank=False, null=False, default='default')
+    designation = models.CharField(max_length=10, choices=designation_list, null=True, blank=True)
+
     def __str__(self):
         return self.advisor.get_full_name
+
+
+
+class Lecturer(models.Model):
+    lecturer = models.OneToOneField(DepartmentStaff, on_delete=models.CASCADE)
+
+
+class DepartmentHead(models.Model):
+    user = models.OneToOneField(DepartmentStaff, on_delete=models.CASCADE)
