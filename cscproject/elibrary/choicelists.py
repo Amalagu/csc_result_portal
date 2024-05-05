@@ -2,6 +2,7 @@
 
 
 
+
 GENRE_CHOICES = (
     ('Algorithms', 'Algorithms'),
     ('Data Structures', 'Data Structures'),
@@ -38,7 +39,6 @@ GENRE_CHOICES = (
     ('Computer Science Education', 'Computer Science Education'),
     ('Others', 'Others'),
 )
-
 
 
 

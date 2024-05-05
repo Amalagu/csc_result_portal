@@ -1,5 +1,6 @@
 from django.db import models
 from portal.models import Semester, Session
+from accounts.models import Lecturer
 # Create your models here.
 
 
@@ -22,6 +23,7 @@ level_list = (
 
 
 
+
 class Course(models.Model):
     code = models.CharField(max_length=7, unique=False, blank=False, null=False)
     title = models.CharField(max_length=140, blank=False, null=False)
@@ -35,3 +37,16 @@ class Course(models.Model):
 
     def __str__(self):
         return self.code
+
+
+
+class CourseAllocation(models.Model):
+    lecturer = models.ForeignKey(Lecturer, on_delete=models.CASCADE, related_name='allocated_lecturer')
+    courses = models.ManyToManyField(Course, related_name='allocated_course')
+    session = models.ForeignKey(Session, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return self.lecturer.staff.user.get_full_name
+
+
+
